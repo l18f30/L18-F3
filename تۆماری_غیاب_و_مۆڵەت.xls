@@ -1,0 +1,14 @@
+<table id="mainTable">
+                    <thead>
+                        <tr>
+                            <th>ناو</th>
+                            <th>پلە</th>
+                            <th>یەکە</th>
+                            <th>جۆر</th>
+                            <th>بەروار</th>
+                            <th>تێبینی</th>
+                            <th>کردارەکان</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recordsTable"></tbody>
+                </table>
