@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لیوای ١٨ فەوجی ٣</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #e74c3c;
+            --accent: #f39c12;
+            --light: #ecf0f1;
+            --dark: #1a252f;
+            --leave: #27ae60;
+            --delete: #c0392b;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--light);
+            margin: 0;
+            padding: 0;
+            color: var(--dark);
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 1rem 1.5rem;
+            border-bottom: 5px solid var(--accent);
+        }
+
+        .header-logo {
+            height: 150px;
+            width: auto;
+            border-radius: 8px;
+        }
+
+        .header-text {
+            flex-grow: 1;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+        
+        .tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            background-color: #ddd;
+            border-radius: 5px 5px 0 0;
+            margin-left: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            background-color: white;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .form-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0 10px 10px 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--accent);
+            outline: none;
+        }
+        
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 700;
+            transition: all 0.3s;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark);
+        }
+        
+        .btn-print {
+            background-color: var(--accent);
+        }
+        
+        .btn-leave {
+            background-color: var(--leave);
+        }
+        
+        .btn-delete {
+            background-color: var(--delete);
+        }
+        
+        .btn-edit {
+            background-color: var(--accent);
+        }
+        
+        .btn-print:hover {
+            background-color: #e67e22;
+        }
+        
+        .btn-leave:hover {
+            background-color: #219653;
+        }
+        
+        .btn-delete:hover {
+            background-color: #96281b;
+        }
+        
+        .btn-edit:hover {
+            background-color: #e67e22;
+        }
+        
+        .records-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 1rem;
+            text-align: right;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            background-color: #f8f9fa;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        
+        .badge-absence {
+            background-color: #ffecec;
+            color: var(--secondary);
+        }
+        
+        .badge-leave {
+            background-color: #e8f5e9;
+            color: var(--leave);
+        }
+        
+        .action-btn {
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-right: 0.3rem;
+        }
+        
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+        
+        .filter-group {
+            display: flex;
+            align-items: center;
+        }
+        
+        .filter-group label {
+            margin-left: 0.5rem;
+            margin-bottom: 0;
+        }
+        
+        .filter-group select {
+            width: auto;
+            padding: 0.5rem;
+        }
+        
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .records-container, .records-container * {
+                visibility: visible;
+            }
+            .records-container {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .btn, .form-container, .filter-container {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            th, td {
+                padding: 0.8rem;
+            }
+            
+            .filter-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="l-h.png" alt="Logo" class="header-logo">
+        <div class="header-text">
+            <h1>لیوای ١٨ فەوجی ٣</h1>
+            <p>سیستەمی غیاب و مۆڵەت</p>
+        </div>
+        <img src="l-w.png" alt="Logo" class="header-logo">
+    </div>
+    
+    <div class="container">
+        <div style="margin-bottom: 1rem;">
+             <button onclick="promptForPassword()" class="btn" style="width: auto; padding: 0.5rem 1rem; background-color: var(--accent);"><i class="fas fa-users"></i> بەڕێوەبردنی سەربازەکان</button>
+        </div>
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('absence')">سیستەمی غیاب</div>
+            <div class="tab" onclick="showTab('leave')">سیستەمی مۆڵەت</div>
+            <div class="tab" onclick="showTab('records')">تۆماری غیاب و مۆڵەت</div>
+        </div>
+        
+        <!-- Absence Form -->
+        <div id="absenceFormContainer" class="form-container">
+            <h2 style="color: var(--primary); margin-top: 0;">تۆمارکردنی غیابی نوێ</h2>
+            <form id="absenceForm">
+                <div class="form-group">
+                    <label for="soldierName">ناوی سەرباز</label>
+                    <input type="text" id="soldierName" list="soldiersList" placeholder="گەڕان بۆ ناوی سەرباز..." oninput="fillSoldierData('absence')" required>
+                    <datalist id="soldiersList"></datalist>
+                </div>
+                
+                <div class="form-group">
+                    <label for="rank">پلە</label>
+                    <select id="rank" required>
+                        <option value="">هەڵبژێرە</option>
+                        <option value="پ.م">پ.م</option>
+                        <option value="جندي اول">جندي اول</option>
+                        <option value="نائب عریف">نائب عریف</option>
+                        <option value="عریف">عریف</option>
+                        <option value="رئیس عرفاء">رئیس عرفاء</option>
+                        <option value="ن.ض د٨">ن.ض د٨</option>
+                        <option value="ن.ض د٧">ن.ض د٧</option>
+                        <option value="ن.ض د٦">ن.ض د٦</option>
+                        <option value="ن.ض د٥">ن.ض د٥</option>
+                        <option value="ن.ض د٤">ن.ض د٤</option>
+                        <option value="ن.ض د٣">ن.ض د٣</option>
+                        <option value="ن.ض د٢">ن.ض د٢</option>
+                        <option value="ن.ض د١">ن.ض د١</option>
+                        <option value="ن.ض د/ممتاز">ن.ض د/ممتاز</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="unit">شوێن/یەکە</label>
+                    <select id="unit" required>
+                        <option value="">هەڵبژێرە</option>
+                        <option value="بارەگا">بارەگا</option>
+                        <option value="مشاة الی">مشاة الی</option>
+                        <option value="اسناد">اسناد</option>
+                        <option value="سریەی١ ف١">سریەی١ ف١</option>
+                        <option value="سریەی١ ف٢">سریەی١ ف٢</option>
+                        <option value="سریەی١ ف٣">سریەی١ ف٣</option>
+                        <option value="سریەی٢ ف١">سریەی٢ ف١</option>
+                        <option value="سریەی٢ ف٢">سریەی٢ ف٢</option>
+                        <option value="سریەی٢ ف٣">سریەی٢ ف٣</option>
+                        <option value="سریەی٣ ف١">سریەی٣ ف١</option>
+                        <option value="سریەی٣ ف٢">سریەی٣ ف٢</option>
+                        <option value="سریەی٣ ف٣">سریەی٣ ف٣</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="absenceDate">بەرواری غیاب</label>
+                    <input type="date" id="absenceDate" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="absenceReturnDate">بەرواری گەڕانەوەی غایب</label>
+                    <input type="date" id="absenceReturnDate">
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">تێبینی</label>
+                    <textarea id="notes" rows="3" placeholder="تێبینییەکان..."></textarea>
+                </div>
+                
+                <button type="button" onclick="saveRecord('absence')" class="btn">
+                    تۆمارکردنی غیاب
+                </button>
+            </form>
+        </div>
+        
+        <!-- Leave Form -->
+        <div id="leaveFormContainer" class="form-container" style="display: none;">
+            <h2 style="color: var(--leave); margin-top: 0;">تۆمارکردنی مۆڵەتی نوێ</h2>
+            <form id="leaveForm">
+                <div class="form-group">
+                    <label for="leaveSoldierName">ناوی سەرباز</label>
+                    <input type="text" id="leaveSoldierName" list="soldiersList" placeholder="گەڕان بۆ ناوی سەرباز..." oninput="fillSoldierData('leave')" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="leaveRank">پلە</label>
+                    <select id="leaveRank" required>
+                        <option value="">هەڵبژێرە</option>
+                        <option value="پ.م">پ.م</option>
+                        <option value="جندي اول">جندي اول</option>
+                        <option value="نائب عریف">نائب عریف</option>
+                        <option value="عریف">عریف</option>
+                        <option value="رئیس عرفاء">رئیس عرفاء</option>
+                        <option value="ن.ض د٨">ن.ض د٨</option>
+                        <option value="ن.ض د٧">ن.ض د٧</option>
+                        <option value="ن.ض د٦">ن.ض د٦</option>
+                        <option value="ن.ض د٥">ن.ض د٥</option>
+                        <option value="ن.ض د٤">ن.ض د٤</option>
+                        <option value="ن.ض د٣">ن.ض د٣</option>
+                        <option value="ن.ض د٢">ن.ض د٢</option>
+                        <option value="ن.ض د١">ن.ض د١</option>
+                        <option value="ن.ض د/ممتاز">ن.ض د/ممتاز</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="leaveUnit">شوێن/یەکە</label>
+                    <select id="leaveUnit" required>
+                        <option value="">هەڵبژێرە</option>
+                        <option value="بارەگا">بارەگا</option>
+                        <option value="مشاة الی">مشاة الی</option>
+                        <option value="اسناد">اسناد</option>
+                        <option value="سریەی١ ف١">سریەی١ ف١</option>
+                        <option value="سریەی١ ف٢">سریەی١ ف٢</option>
+                        <option value="سریەی١ ف٣">سریەی١ ف٣</option>
+                        <option value="سریەی٢ ف١">سریەی٢ ف١</option>
+                        <option value="سریەی٢ ف٢">سریەی٢ ف٢</option>
+                        <option value="سریەی٢ ف٣">سریەی٢ ف٣</option>
+                        <option value="سریەی٣ ف١">سریەی٣ ف١</option>
+                        <option value="سریەی٣ ف٢">سریەی٣ ف٢</option>
+                        <option value="سریەی٣ ف٣">سریەی٣ ف٣</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="leaveStartDate">بەرواری دەستپێک</label>
+                    <input type="date" id="leaveStartDate" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="leaveEndDate">بەرواری کۆتایی</label>
+                    <input type="date" id="leaveEndDate" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="leaveType">جۆری مۆڵەت</label>
+                    <select id="leaveType" required>
+                        <option value="">هەڵبژێرە</option>
+                        <option value="مۆڵەتی ئاسایی">مۆڵەتی ئاسایی</option>
+                        <option value="مۆڵەتی نەخۆشی">مۆڵەتی نەخۆشی</option>
+                        <option value="مۆڵەتی تایبەت">مۆڵەتی تایبەت</option>
+                        <option value="مۆڵەتی فەرمی">مۆڵەتی فەرمی</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="leaveNotes">تێبینی</label>
+                    <textarea id="leaveNotes" rows="3" placeholder="تێبینییەکان..."></textarea>
+                </div>
+                
+                <button type="button" onclick="saveRecord('leave')" class="btn btn-leave">
+                    تۆمارکردنی مۆڵەت
+                </button>
+            </form>
+        </div>
+        
+        <!-- Records Section -->
+        <div id="recordsContainer" class="form-container" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h2 style="margin: 0; color: var(--primary);">زانیارییەکانی غیاب و مۆڵەت</h2>
+                <div>
+                    <button onclick="window.print()" class="btn btn-print" style="width: auto; padding: 0.5rem 1rem;">
+                        چاپکردن
+                    </button>
+                    <button onclick="exportToExcel()" class="btn btn-leave" style="width: auto; padding: 0.5rem 1rem; margin-left: 0.5rem;">
+                        هەناردە بۆ Excel
+                    </button>
+                </div>
+            </div>
+            
+            <div class="filter-container">
+                <div class="filter-group">
+                    <label for="filterType">جۆر:</label>
+                    <select id="filterType" onchange="filterRecords()">
+                        <option value="all">هەموو</option>
+                        <option value="absence">غیاب</option>
+                        <option value="leave">مۆڵەت</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="filterYear">ساڵ:</label>
+                    <select id="filterYear" onchange="filterRecords()">
+                        <option value="all">هەموو ساڵەکان</option>
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                        <option value="2027">2027</option>
+                        <option value="2028">2028</option>
+                        <option value="2029">2029</option>
+                        <option value="2030">2030</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="filterMonth">مانگ:</label>
+                    <select id="filterMonth" onchange="filterRecords()">
+                        <option value="all">هەموو مانگەکان</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="filterUnit">یەکە:</label>
+                    <select id="filterUnit" onchange="filterRecords()">
+                        <option value="all">هەموو یەکەکان</option>
+                        <option value="بارەگا">بارەگا</option>
+                        <option value="مشاة الی">مشاة الی</option>
+                        <option value="اسناد">اسناد</option>
+                        <option value="سریەی١ ف١">سریەی١ ف١</option>
+                        <option value="سریەی١ ف٢">سریەی١ ف٢</option>
+                        <option value="سریەی١ ف٣">سریەی١ ف٣</option>
+                        <option value="سریەی٢ ف١">سریەی٢ ف١</option>
+                        <option value="سریەی٢ ف٢">سریەی٢ ف٢</option>
+                        <option value="سریەی٢ ف٣">سریەی٢ ف٣</option>
+                        <option value="سریەی٣ ف١">سریەی٣ ف١</option>
+                        <option value="سریەی٣ ف٢">سریەی٣ ف٢</option>
+                        <option value="سریەی٣ ف٣">سریەی٣ ف٣</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="filterName">ناو:</label>
+                    <input type="text" id="filterName" placeholder="ناوی سەرباز" oninput="filterRecords()">
+                </div>
+                
+                <button onclick="clearFilters()" class="btn" style="width: auto; padding: 0.5rem 1rem;">
+                    پاککردنەوەی فلتەرەکان
+                </button>
+            </div>
+            
+            <div style="overflow-x: auto;">
+                <table id="mainTable">
+                    <thead>
+                        <tr>
+                            <th>ناو</th>
+                            <th>پلە</th>
+                            <th>یەکە</th>
+                            <th>جۆر</th>
+                            <th>بەروار</th>
+                            <th>تێبینی</th>
+                            <th>کردارەکان</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recordsTable">
+                        <!-- تۆمارەکان بە شێوەیەکی خۆکارانە زیاد دەکرێن -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Show/hide tabs
+        function showTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.getElementById('absenceFormContainer').style.display = 'none';
+            document.getElementById('leaveFormContainer').style.display = 'none';
+            document.getElementById('recordsContainer').style.display = 'none';
+            
+            if(tabName === 'absence') {
+                document.querySelector('.tab:nth-child(1)').classList.add('active');
+                document.getElementById('absenceFormContainer').style.display = 'block';
+            } else if(tabName === 'leave') {
+                document.querySelector('.tab:nth-child(2)').classList.add('active');
+                document.getElementById('leaveFormContainer').style.display = 'block';
+            } else {
+                document.querySelector('.tab:nth-child(3)').classList.add('active');
+                document.getElementById('recordsContainer').style.display = 'block';
+                filterRecords(); // Apply current filters when showing records
+            }
+        }
+        
+        // Save records to localStorage
+        function saveRecordsToStorage() {
+            const table = document.getElementById('recordsTable');
+            const records = [];
+            
+            // هەموو ڕیزەکان کۆبکەرەوە
+            table.querySelectorAll('tr').forEach(row => {
+                const cells = row.querySelectorAll('td');
+                const isLeave = row.classList.contains('leave');
+                
+                records.push({
+                    type: isLeave ? 'leave' : 'absence',
+                    name: cells[0].textContent,
+                    rank: cells[1].textContent,
+                    unit: cells[2].textContent,
+                    date: cells[4].textContent,
+                    notes: cells[5].textContent,
+                    rowClass: row.className,
+                    dataDate: row.getAttribute('data-date'),
+                    dataUnit: row.getAttribute('data-unit')
+                });
+            });
+            
+            // هەڵگرتنی تۆمارەکان لە localStorage
+            localStorage.setItem('militaryRecords', JSON.stringify(records));
+        }
+        
+        // Load records from localStorage
+        function loadRecordsFromStorage() {
+            const savedRecords = localStorage.getItem('militaryRecords');
+            if (!savedRecords) return;
+            
+            const records = JSON.parse(savedRecords);
+            const table = document.getElementById('recordsTable');
+            table.innerHTML = ''; // پاککردنەوەی هەر تۆمارێکی پێشوو
+            
+            records.forEach(record => {
+                const row = table.insertRow(0);
+                row.className = record.rowClass;
+                row.setAttribute('data-date', record.dataDate);
+                row.setAttribute('data-unit', record.dataUnit);
+                
+                if (record.type === 'absence') {
+                    row.innerHTML = `
+                        <td>${record.name}</td>
+                        <td>${record.rank}</td>
+                        <td>${record.unit}</td>
+                        <td><span class="badge badge-absence">غیاب</span></td>
+                        <td>${record.date}</td>
+                        <td>${record.notes}</td>
+                        <td>
+                            <button onclick="editRecord(this)" class="action-btn" style="background-color: var(--accent);">گۆڕانکاری</button>
+                            <button onclick="deleteRecord(this)" class="action-btn" style="background-color: var(--delete);">سڕینەوە</button>
+                        </td>
+                    `;
+                } else {
+                    row.innerHTML = `
+                        <td>${record.name}</td>
+                        <td>${record.rank}</td>
+                        <td>${record.unit}</td>
+                        <td><span class="badge badge-leave">مۆڵەت</span></td>
+                        <td>${record.date}</td>
+                        <td>${record.notes}</td>
+                        <td>
+                            <button onclick="editRecord(this)" class="action-btn" style="background-color: var(--accent);">گۆڕانکاری</button>
+                            <button onclick="deleteRecord(this)" class="action-btn" style="background-color: var(--delete);">سڕینەوە</button>
+                        </td>
+                    `;
+                }
+            });
+        }
+        
+        // Edit record
+        function editRecord(button) {
+            const row = button.closest('tr');
+            const cells = row.querySelectorAll('td');
+            const isLeave = row.classList.contains('leave');
+
+            // زانیارییەکانی ڕیزەکە وەربگرە
+            const name = cells[0].textContent;
+            const rank = cells[1].textContent;
+            const unit = cells[2].textContent;
+            const notes = cells[5].textContent;
+
+            if (isLeave) {
+                // گۆڕانکاری مۆڵەت
+                const dates = cells[4].textContent.split(' - ');
+                const leaveType = cells[5].textContent.split('\n')[0]; // جۆری مۆڵەت
+
+                document.getElementById('leaveSoldierName').value = name;
+                document.getElementById('leaveRank').value = rank;
+                document.getElementById('leaveUnit').value = unit;
+                document.getElementById('leaveStartDate').value = dates[0];
+                document.getElementById('leaveEndDate').value = dates[1];
+                document.getElementById('leaveType').value = leaveType;
+                document.getElementById('leaveNotes').value = notes.replace(leaveType, '').trim();
+
+                // فۆرمی مۆڵەت پیشان بدە
+                showTab('leave');
+            } else {
+                // گۆڕانکاری غیاب
+                const dates = cells[4].textContent.split(' - ');
+                const absenceDate = dates[0];
+                const returnDate = dates.length > 1 ? dates[1] : '';
+
+                document.getElementById('soldierName').value = name;
+                document.getElementById('rank').value = rank;
+                document.getElementById('unit').value = unit;
+                document.getElementById('absenceDate').value = absenceDate;
+                document.getElementById('absenceReturnDate').value = returnDate;
+                document.getElementById('notes').value = notes;
+
+                // فۆرمی غیاب پیشان بدە
+                showTab('absence');
+            }
+
+            // ڕیزەکە بسڕەوە (بۆ ئەوەی دووبارە تۆمار نەکرێتەوە)
+            row.remove();
+            saveRecordsToStorage();
+        }
+        
+        // Save records
+        function saveRecord(type) {
+            if(type === 'absence') {
+                const soldierName = document.getElementById('soldierName').value;
+                const rank = document.getElementById('rank').value;
+                const unit = document.getElementById('unit').value;
+                const date = document.getElementById('absenceDate').value;
+                const returnDate = document.getElementById('absenceReturnDate').value;
+                const notes = document.getElementById('notes').value;
+                
+                if (!soldierName || !rank || !unit || !date) {
+                    alert("تکایە هەموو خانە پڕەکان پڕ بکەرەوە!");
+                    return;
+                }
+                
+                const table = document.getElementById('recordsTable');
+                const row = table.insertRow(0);
+                row.className = 'absence';
+                row.setAttribute('data-date', date);
+                row.setAttribute('data-unit', unit);
+                row.innerHTML = `
+                    <td>${soldierName}</td>
+                    <td>${rank}</td>
+                    <td>${unit}</td>
+                    <td><span class="badge badge-absence">غیاب</span></td>
+                    <td>${date}${returnDate ? ' - ' + returnDate : ''}</td>
+                    <td>${notes || '-'}</td>
+                    <td>
+                        <button onclick="editRecord(this)" class="action-btn" style="background-color: var(--accent);">گۆڕانکاری</button>
+                        <button onclick="deleteRecord(this)" class="action-btn" style="background-color: var(--delete);">سڕینەوە</button>
+                    </td>
+                `;
+                
+                document.getElementById('absenceForm').reset();
+                saveRecordsToStorage(); // تۆمارەکان هەڵبگرە لە localStorage
+                alert("تۆمارەکەت بە سەرکەوتوویی تۆمارکرا!");
+            } else {
+                const soldierName = document.getElementById('leaveSoldierName').value;
+                const rank = document.getElementById('leaveRank').value;
+                const unit = document.getElementById('leaveUnit').value;
+                const startDate = document.getElementById('leaveStartDate').value;
+                const endDate = document.getElementById('leaveEndDate').value;
+                const type = document.getElementById('leaveType').value;
+                const notes = document.getElementById('leaveNotes').value;
+                
+                if (!soldierName || !rank || !unit || !startDate || !endDate || !type) {
+                    alert("تکایە هەموو خانە پڕەکان پڕ بکەرەوە!");
+                    return;
+                }
+                
+                const table = document.getElementById('recordsTable');
+                const row = table.insertRow(0);
+                row.className = 'leave';
+                row.setAttribute('data-date', startDate);
+                row.setAttribute('data-unit', unit);
+                row.innerHTML = `
+                    <td>${soldierName}</td>
+                    <td>${rank}</td>
+                    <td>${unit}</td>
+                    <td><span class="badge badge-leave">مۆڵەت</span></td>
+                    <td>${startDate} - ${endDate}</td>
+                    <td>${type}${notes ? '<br>' + notes : ''}</td>
+                    <td>
+                        <button onclick="editRecord(this)" class="action-btn" style="background-color: var(--accent);">گۆڕانکاری</button>
+                        <button onclick="deleteRecord(this)" class="action-btn" style="background-color: var(--delete);">سڕینەوە</button>
+                    </td>
+                `;
+                
+                document.getElementById('leaveForm').reset();
+                saveRecordsToStorage(); // تۆمارەکان هەڵبگرە لە localStorage
+                alert("تۆمارەکەت بە سەرکەوتوویی تۆمارکرا!");
+            }
+        }
+        
+        // Delete record
+        function deleteRecord(button) {
+            const password = prompt("بۆ سڕینەوە، تکایە پاسوۆرد بنووسە:", "");
+            if (password === "1234") {
+                if(confirm("دڵنیای لە سڕینەوەی ئەم تۆمارە؟")) {
+                    const row = button.closest('tr');
+                    row.remove();
+                    saveRecordsToStorage(); // تۆمارەکان هەڵبگرە دوای сڕینەوە
+                    alert("تۆمارەکە بە سەرکەوتوویی сڕایەوە!");
+                }
+            } else if (password !== null && password !== "") {
+                alert("پاسوۆرد هەڵەیە!");
+            }
+        }
+        
+        // Filter records
+        function filterRecords() {
+            const typeFilter = document.getElementById('filterType').value;
+            const yearFilter = document.getElementById('filterYear').value;
+            const monthFilter = document.getElementById('filterMonth').value;
+            const unitFilter = document.getElementById('filterUnit').value;
+            const nameFilter = document.getElementById('filterName').value.toLowerCase();
+            
+            const rows = document.querySelectorAll('#recordsTable tr');
+            
+            rows.forEach(row => {
+                const rowType = row.classList.contains('absence') ? 'absence' : 'leave';
+                const rowDate = row.getAttribute('data-date');
+                const rowYear = rowDate ? rowDate.split('-')[0] : '';
+                const rowMonth = rowDate ? rowDate.split('-')[1] : '';
+                const rowUnit = row.getAttribute('data-unit') || '';
+                const rowName = row.querySelector('td:first-child').textContent.toLowerCase();
+                
+                let showRow = true;
+                
+                // Apply type filter
+                if(typeFilter !== 'all' && rowType !== typeFilter) {
+                    showRow = false;
+                }
+                
+                // Apply year filter
+                if(yearFilter !== 'all' && rowYear !== yearFilter) {
+                    showRow = false;
+                }
+                
+                // Apply month filter
+                if(monthFilter !== 'all' && rowMonth !== monthFilter) {
+                    showRow = false;
+                }
+                
+                // Apply unit filter
+                if(unitFilter !== 'all' && rowUnit !== unitFilter) {
+                    showRow = false;
+                }
+                
+                // Apply name filter
+                if(nameFilter && !rowName.includes(nameFilter)) {
+                    showRow = false;
+                }
+                
+                row.style.display = showRow ? '' : 'none';
+            });
+        }
+        
+        // Clear all filters
+        function clearFilters() {
+            document.getElementById('filterType').value = 'all';
+            document.getElementById('filterYear').value = 'all';
+            document.getElementById('filterMonth').value = 'all';
+            document.getElementById('filterUnit').value = 'all';
+            document.getElementById('filterName').value = '';
+            filterRecords();
+        }
+        
+        // Export to Excel
+        function exportToExcel() {
+            // Create a temporary table with only visible rows
+            const originalTable = document.getElementById('mainTable');
+            const tempTable = originalTable.cloneNode(true);
+            
+            // Remove hidden rows
+            const rows = tempTable.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                if(row.style.display === 'none') {
+                    row.remove();
+                }
+            });
+            
+            // Create HTML content
+            const html = tempTable.outerHTML;
+            
+            // Create download link
+            const blob = new Blob([html], {type: 'application/vnd.ms-excel'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'تۆماری_غیاب_و_مۆڵەت.xls';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+        
+        // Load soldiers into datalist
+        function loadSoldiersForSearch() {
+            const soldiers = JSON.parse(localStorage.getItem('soldiers')) || [];
+            const datalist = document.getElementById('soldiersList');
+            datalist.innerHTML = ''; // Clear previous options
+            soldiers.forEach(soldier => {
+                const option = document.createElement('option');
+                option.value = soldier.name;
+                datalist.appendChild(option);
+            });
+        }
+
+        // Fill soldier data automatically
+        function fillSoldierData(type) {
+            const soldiers = JSON.parse(localStorage.getItem('soldiers')) || [];
+            let nameInput, rankSelect, unitSelect;
+
+            if (type === 'absence') {
+                nameInput = document.getElementById('soldierName');
+                rankSelect = document.getElementById('rank');
+                unitSelect = document.getElementById('unit');
+            } else { // leave
+                nameInput = document.getElementById('leaveSoldierName');
+                rankSelect = document.getElementById('leaveRank');
+                unitSelect = document.getElementById('leaveUnit');
+            }
+            
+            const selectedSoldier = soldiers.find(s => s.name === nameInput.value);
+
+            if (selectedSoldier) {
+                rankSelect.value = selectedSoldier.rank;
+                unitSelect.value = selectedSoldier.unit;
+            }
+        }
+
+        function promptForPassword() {
+            const password = prompt("تکایە پاسوۆرد بنووسە:", "");
+            if (password === "1234") {
+                sessionStorage.setItem('isLoggedIn', 'true');
+                window.location.href = "soldiers.html";
+            } else if (password !== null && password !== "") {
+                alert("پاسوۆرد هەڵەیە!");
+            }
+        }
+
+        // Initialize with current year selected
+        document.addEventListener('DOMContentLoaded', function() {
+            const userRole = sessionStorage.getItem('userRole');
+
+            if (userRole === 'user') {
+                // Hide form tabs and soldier management button
+                document.querySelector('.tabs').style.display = 'none';
+                document.querySelector('.form-container').style.display = 'none';
+                document.querySelector('button[onclick="promptForPassword()"]').style.display = 'none';
+
+                // Show only the records tab content
+                showTab('records');
+
+                // Hide action buttons in the table
+                const actionButtons = document.querySelectorAll('.action-btn');
+                actionButtons.forEach(button => {
+                    button.style.display = 'none';
+                });
+                 // Hide action header in the table
+                const actionHeader = document.querySelector('#mainTable th:last-child');
+                if(actionHeader) {
+                    actionHeader.style.display = 'none';
+                }
+            }
+
+
+            const currentYear = new Date().getFullYear().toString();
+            const yearSelect = document.getElementById('filterYear');
+            
+            // Set current year as selected if it exists in options
+            for(let i = 0; i < yearSelect.options.length; i++) {
+                if(yearSelect.options[i].value === currentYear) {
+                    yearSelect.selectedIndex = i;
+                    break;
+                }
+            }
+            
+            // Set current month as selected
+            const currentMonth = (new Date().getMonth() + 1).toString();
+            const monthSelect = document.getElementById('filterMonth');
+            
+            for(let i = 0; i < monthSelect.options.length; i++) {
+                if(monthSelect.options[i].value === currentMonth) {
+                    monthSelect.selectedIndex = i;
+                    break;
+                }
+            }
+            
+            // Load saved records and soldiers
+            loadRecordsFromStorage();
+            loadSoldiersForSearch();
+
+            if (userRole === 'user') {
+                 // Hide action buttons in the table after loading
+                const actionButtons = document.querySelectorAll('.action-btn');
+                actionButtons.forEach(button => {
+                    button.style.display = 'none';
+                });
+                 // Hide action header in the table
+                const actionHeader = document.querySelector('#mainTable th:last-child');
+                if(actionHeader) {
+                    actionHeader.style.display = 'none';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

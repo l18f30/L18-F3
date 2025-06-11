@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>چونەژورەوە | لیوای ١٨ فەوجی ٣</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #e74c3c;
+            --accent: #f39c12;
+            --light: #ecf0f1;
+            --dark: #1a252f;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--light);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--dark);
+        }
+        
+        .login-container {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+        
+        .logo {
+            margin-bottom: 1.5rem;
+        }
+        
+        .logo h1 {
+            color: var(--primary);
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        
+        .logo p {
+            color: #7f8c8d;
+            margin: 0.5rem 0 0;
+            font-size: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: right;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-sizing: border-box;
+        }
+        
+        input:focus {
+            border-color: var(--accent);
+            outline: none;
+        }
+        
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 700;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark);
+        }
+        
+        .error-message {
+            color: var(--secondary);
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        @media (max-width: 500px) {
+            .login-container {
+                padding: 1.5rem;
+                margin: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <h1>لیوای ١٨ فەوجی ٣</h1>
+            <p>سیستەمی غیاب و مۆڵەتی فەوج</p>
+        </div>
+        
+        <div class="form-group">
+            <label for="username">بەکارهێنەر</label>
+            <input type="text" id="username" placeholder="ناوی بەکارهێنەر بنووسە">
+        </div>
+
+        <div class="form-group">
+            <label for="password">پاسوۆرد</label>
+            <input type="password" id="password" placeholder="پاسوۆرد بنووسە">
+        </div>
+        
+        <button onclick="checkCredentials()" class="btn">چونەژورەوە</button>
+        
+        <div id="errorMessage" class="error-message">
+            ناوی بەکارهێنەر یان پاسوۆرد هەڵەیە!
+        </div>
+    </div>
+
+    <script>
+        function checkCredentials() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Define valid users and passwords
+            const validUsers = {
+                "admin": "12345",
+                "user": "1234"
+            };
+
+            if (validUsers[username] && validUsers[username] === password) {
+                sessionStorage.setItem('authenticated', 'true');
+                // Set user role
+                const userRole = (username === 'admin') ? 'admin' : 'user';
+                sessionStorage.setItem('userRole', userRole);
+                window.location.href = 'home.html';
+            } else {
+                errorMessage.style.display = 'block';
+            }
+        }
+
+        // Allow pressing Enter to submit from either field
+        document.getElementById('username').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                checkCredentials();
+            }
+        });
+
+        document.getElementById('password').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                checkCredentials();
+            }
+        });
+    </script>
+</body>
+</html>
