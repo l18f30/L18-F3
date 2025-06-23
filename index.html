@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>چونەژورەوە | لیوای ١٨ فەوجی ٣</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #e74c3c;
+            --accent: #f39c12;
+            --light: #ecf0f1;
+            --dark: #1a252f;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--light);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--dark);
+        }
+        
+        .login-container {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+        
+        .logo {
+            margin-bottom: 1.5rem;
+        }
+        
+        .logo h1 {
+            color: var(--primary);
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        
+        .logo p {
+            color: #7f8c8d;
+            margin: 0.5rem 0 0;
+            font-size: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: right;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-sizing: border-box;
+        }
+        
+        input:focus {
+            border-color: var(--accent);
+            outline: none;
+        }
+        
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 700;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark);
+        }
+        
+        /* Profile Section Styles */
+        .profile-container {
+            display: none;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 850px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .profile-pic-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid var(--light);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-left: 2rem;
+        }
+        
+        .profile-pic {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-upload {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: var(--accent);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .profile-upload:hover {
+            background: var(--primary);
+            transform: scale(1.1);
+        }
+        
+        .profile-upload input[type="file"] {
+            display: none;
+        }
+        
+        .profile-info {
+            flex: 1;
+        }
+        
+        .profile-name {
+            font-size: 1.5rem;
+            margin: 0 0 0.5rem 0;
+            color: var(--primary);
+        }
+        
+        .profile-role {
+            color: #7f8c8d;
+            margin: 0;
+        }
+        
+        .profile-sections {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .profile-tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .profile-tab.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+        
+        .profile-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .profile-content.active {
+            display: block;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .backup-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .backup-card {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid #eee;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .backup-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .backup-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .error-message {
+            color: var(--secondary);
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        @media (max-width: 500px) {
+            .login-container {
+                padding: 1.5rem;
+                margin: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Form -->
+    <div class="login-container" id="loginContainer">
+        <div class="logo">
+            <h1>لیوای ١٨ فەوجی ٣</h1>
+            <p>سیستەمی بەڕێوەبردنی غیاب و مۆڵەت</p>
+        </div>
+        
+        <div class="form-group">
+            <label for="username">ناوی بەکارهێنەر</label>
+            <input type="text" id="username" placeholder="ناوی بەکارهێنەر بنووسە">
+        </div>
+        
+        <div class="form-group">
+            <label for="password">وشەی نهێنی</label>
+            <input type="password" id="password" placeholder="وشەی نهێنی بنووسە">
+        </div>
+        
+        <button class="btn" onclick="checkCredentials()">چونەژورەوە</button>
+        <p id="errorMessage" class="error-message"></p>
+    </div>
+
+    <!-- Profile Section -->
+    <div class="profile-container" id="profileContainer">
+        <div class="profile-header">
+            <div class="profile-pic-container">
+                <img id="profileImage" src="profile-placeholder.png" alt="Profile Picture" class="profile-pic">
+                <label class="profile-upload" for="profileUpload">
+                    <i class="fas fa-camera"></i>
+                    <input type="file" id="profileUpload" accept="image/*">
+                </label>
+            </div>
+            <div class="profile-info">
+                <h2 class="profile-name" id="profileName">ناوی بەکارهێنەر</h2>
+                <p class="profile-role">بەڕێوەبەری سیستەم</p>
+            </div>
+        </div>
+        
+        <div class="profile-sections">
+            <div class="profile-tab active" onclick="showTab('profile')">
+                <i class="fas fa-user"></i> پرۆفایل
+            </div>
+            <div class="profile-tab" onclick="showTab('password')">
+                <i class="fas fa-key"></i> گۆڕینی وشەی نهێنی
+            </div>
+            <div class="profile-tab" onclick="showTab('backup')">
+                <i class="fas fa-database"></i> پشتیوانی
+            </div>
+        </div>
+        
+        <!-- Profile Tab Content -->
+        <div id="profileTab" class="profile-content active">
+            <h3>زانیارییەکانی پرۆفایل</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="fullName">ناوی تەواو</label>
+                    <input type="text" id="fullName" value="ناوی تەواو">
+                </div>
+                <div class="form-group">
+                    <label for="email">ئیمەیڵ</label>
+                    <input type="email" id="email" value="example@example.com">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">ژمارەی مۆبایل</label>
+                <input type="tel" id="phoneNumber" value="٠٧٧٠ ١٢٣ ٤٥٦٧">
+            </div>
+            <div class="btn-group">
+                <button class="btn" onclick="saveProfile()">پاشەکەوت کردنی گۆڕانکارییەکان</button>
+            </div>
+        </div>
+        
+        <!-- Password Tab Content -->
+        <div id="passwordTab" class="profile-content">
+            <h3>گۆڕینی وشەی نهێنی</h3>
+            <div class="form-group">
+                <label for="currentPassword">وشەی نهێنی ئێستا</label>
+                <input type="password" id="currentPassword" placeholder="وشەی نهێنی ئێستا بنووسە">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="newPassword">وشەی نهێنی نوێ</label>
+                    <input type="password" id="newPassword" placeholder="وشەی نهێنی نوێ">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">دووبارەکردنەوەی وشەی نهێنی نوێ</label>
+                    <input type="password" id="confirmPassword" placeholder="دووبارەکردنەوەی وشەی نهێنی نوێ">
+                </div>
+            </div>
+            <div class="btn-group">
+                <button class="btn" onclick="changePassword()">گۆڕینی وشەی نهێنی</button>
+            </div>
+            <p id="passwordMessage" class="error-message"></p>
+        </div>
+        
+        <!-- Backup Tab Content -->
+        <div id="backupTab" class="profile-content">
+            <h3>پشتیوانی و گەڕاندنەوەی زانیارییەکان</h3>
+            <p>لێرە دەتوانیت زانیارییەکانی سیستەم هەڵبگریت یان گەڕانەوەی لێبکەیتەوە.</p>
+            
+            <div class="backup-options">
+                <div class="backup-card" onclick="exportData()">
+                    <div class="backup-icon">
+                        <i class="fas fa-file-export"></i>
+                    </div>
+                    <h4>هەڵگرتنی زانیارییەکان</h4>
+                    <p>هەموو زانیارییەکان وەک فایلێکی JSON هەڵبگرە</p>
+                </div>
+                
+                <div class="backup-card" onclick="document.getElementById('restoreFile').click()">
+                    <div class="backup-icon">
+                        <i class="fas fa-file-import"></i>
+                    </div>
+                    <h4>گەڕاندنەوەی زانیارییەکان</h4>
+                    <p>زانیارییە پێشووەکان لە فایلێکەوە بخەرە ناو سیستەمەوە</p>
+                    <input type="file" id="restoreFile" accept=".json" style="display: none;" onchange="importData(event)">
+                </div>
+            </div>
+            <p id="backupMessage" class="success-message"></p>
+        </div>
+        
+        <div class="btn-group" style="margin-top: 2rem; justify-content: flex-start;">
+            <button class="btn btn-outline" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> چوونەدەرەوە
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function checkCredentials() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Define default valid users and passwords
+            const defaultUsers = {
+                "admin": "12345",
+                "user": "1234"
+            };
+            
+            // Check for updated passwords in localStorage
+            const updatedPasswords = JSON.parse(localStorage.getItem('updatedPasswords') || '{}');
+            
+            // Check credentials against both default and updated passwords
+            const isDefaultValid = defaultUsers[username] && defaultUsers[username] === password;
+            const isUpdatedValid = updatedPasswords[username] && updatedPasswords[username] === password;
+            
+            if (isDefaultValid || isUpdatedValid) {
+                sessionStorage.setItem('authenticated', 'true');
+                // Set user role
+                const userRole = (username === 'admin') ? 'admin' : 'user';
+                sessionStorage.setItem('userRole', userRole);
+                window.location.href = 'home.html';
+            } else {
+                errorMessage.style.display = 'block';
+            }
+        }
+
+        // Allow pressing Enter to submit from either field
+        document.getElementById('username').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                checkCredentials();
+            }
+        });
+
+        document.getElementById('password').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                checkCredentials();
+            }
+        });
+    </script>
+</body>
+</html>
