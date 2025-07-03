@@ -1,0 +1,3086 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سیستەمی غیاب و مۆڵەت - لیوای ١٨ فەوجی ٣</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #e74c3c;
+            --accent: #f39c12;
+            --light: #ecf0f1;
+            --dark: #1a252f;
+            --leave: #27ae60;
+            --delete: #c0392b;
+            --bg-color: #ffffff;
+            --text-color: #1a252f;
+            --card-bg: #f8f9fa;
+            --border-color: #dee2e6;
+        }
+        
+        /* Dark theme variables */
+        [data-theme="dark"] {
+            --primary: #4da6ff;
+            --light: #2c3e50;
+            --dark: #f8f9fa;
+            --bg-color: #1a252f;
+            --text-color: #f0f4f8;
+            --card-bg: #2c3e50;
+            --border-color: #3e5469;
+            --table-header-bg: #1e2a3a;
+            --hover-bg: #34495e;
+            --input-bg: #2c3e50;
+            --input-text: #ffffff;
+        }
+        
+        /* Modern Mobile styles */
+        @media (max-width: 768px) {
+            /* Smooth transitions and better touch feedback */
+            * {
+                transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+                -webkit-tap-highlight-color: transparent;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+            
+            /* Modern header with shadow */
+            .header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                z-index: 1000;
+                right: 0;
+                z-index: 1000;
+                background: var(--bg-color);
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                padding: 0.8rem 1rem;
+            }
+            
+            .header-text h1 {
+                font-size: 1.4rem;
+                font-weight: 700;
+                color: var(--primary);
+                margin: 0.5rem 0;
+                text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            }
+            
+            /* Mobile menu button */
+            .mobile-menu-btn {
+                background: var(--primary);
+                color: white;
+                border: none;
+                border-radius: 8px;
+                width: 44px;
+                height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5rem;
+                cursor: pointer;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                position: absolute;
+                left: 1rem;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+            
+            /* Navigation menu */
+            .header-actions {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: var(--bg-color);
+                padding: 1rem;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+                border-radius: 0 0 15px 15px;
+                display: none;
+                flex-direction: column;
+                gap: 0.8rem;
+                z-index: 999;
+                animation: slideDown 0.3s ease-out;
+            }
+            
+            @keyframes slideDown {
+                from { transform: translateY(-20px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+            }
+            
+            .header-actions.show {
+                display: flex;
+            }
+            
+            /* Enhanced buttons */
+            .btn {
+                padding: 0.8rem 1.2rem;
+                border-radius: 10px;
+                font-size: 1rem;
+                font-weight: 600;
+                letter-spacing: 0.5px;
+                border: none;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                transition: all 0.2s ease;
+            }
+            
+            .btn:active {
+                transform: scale(0.98);
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            }
+            
+            /* Form elements */
+            input[type="text"],
+            input[type="number"],
+            input[type="date"],
+            select,
+            textarea {
+                width: 100%;
+                padding: 0.9rem 1rem;
+                border: 2px solid #e1e5ee;
+                border-radius: 10px;
+                font-size: 1rem;
+                transition: all 0.3s ease;
+                background-color: var(--input-bg, white);
+                color: var(--input-text, #1a252f);
+            }
+            
+            input[type="text"]:focus,
+            input[type="number"]:focus,
+            input[type="date"]:focus,
+            select:focus,
+            textarea:focus {
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1);
+                outline: none;
+            }
+            
+            /* Tables */
+            .table-responsive {
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                border-radius: 10px;
+                margin: 1rem 0;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            }
+            
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 0.9rem;
+            }
+            
+            th, td {
+                padding: 0.8rem;
+                text-align: right;
+                border-bottom: 1px solid var(--border-color);
+            }
+            
+            th {
+                background-color: var(--table-header-bg, #f8f9fa);
+                font-weight: 700;
+                color: var(--primary);
+            }
+            
+            /* Cards */
+            .card {
+                background: var(--card-bg);
+                border-radius: 12px;
+                padding: 1.2rem;
+                margin-bottom: 1rem;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+                border: 1px solid var(--border-color);
+            }
+            
+            /* Tabs */
+            .tabs {
+                display: flex;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                margin: 1rem 0;
+                padding-bottom: 0.5rem;
+            }
+            
+            .tab {
+                padding: 0.7rem 1.2rem;
+                margin: 0 0.3rem;
+                border-radius: 20px;
+                font-weight: 600;
+                font-size: 0.9rem;
+                white-space: nowrap;
+                background: var(--light);
+                color: var(--text-color);
+                border: none;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
+            
+            .tab.active {
+                background: var(--primary);
+                color: white;
+            }
+            
+            /* Animations */
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            
+            .fade-in {
+                animation: fadeIn 0.3s ease-out forwards;
+            }
+            .header {
+                flex-direction: column;
+                padding: 0.5rem;
+                text-align: center;
+            }
+            
+            .header-text h1 {
+                font-size: 1.2rem;
+                margin: 0.5rem 0;
+            }
+            
+            .header-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+                margin-top: 0.5rem;
+            }
+            
+            .header-actions button {
+                width: 100%;
+                margin: 0.2rem 0;
+            }
+            
+            .container {
+                padding: 0.5rem;
+            }
+            
+            .form-container {
+                padding: 1rem;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .form-group {
+                margin-bottom: 1rem;
+            }
+            
+            .form-group.half {
+                @media (max-width: 768px) {
+                    width: 100% !important;
+                    max-width: 100% !important;
+                    box-sizing: border-box;
+                }
+            }
+            
+            .form-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .form-actions button {
+                width: 100%;
+                margin: 0.2rem 0;
+            }
+            
+            table {
+                font-size: 0.8rem;
+            }
+            
+            th, td {
+                padding: 0.3rem;
+            }
+            
+            .btn {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+            
+            .profile-container {
+                width: 95%;
+                margin: 1rem auto;
+                padding: 0.5rem;
+            }
+            
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-pic-container {
+                margin: 0 auto 1rem;
+            }
+            
+            .profile-sections {
+                flex-direction: column;
+            }
+            
+            .profile-tab {
+                border-bottom: 1px solid var(--border-color);
+                border-right: none;
+            }
+            
+            .backup-options {
+                flex-direction: column;
+            }
+            
+            .backup-card {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 1rem 1.5rem;
+            border-bottom: 5px solid var(--accent);
+        }
+
+        .header-logo {
+            height: 150px;
+            width: auto;
+            border-radius: 8px;
+        }
+
+        .header-text {
+            flex-grow: 1;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+        
+        .tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            background-color: var(--card-bg);
+            border-radius: 5px 5px 0 0;
+            margin-left: 0.5rem;
+            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+            border-bottom: none;
+        }
+        
+        .tab.active {
+            background-color: var(--card-bg);
+            font-weight: bold;
+            color: var(--primary);
+            border-bottom: 1px solid var(--card-bg);
+            margin-bottom: -1px;
+        }
+        
+        /* Profile Button */
+        .profile-btn-container {
+            position: absolute;
+            left: 20px;
+        }
+        
+        /* Profile Overlay */
+        .profile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .profile-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .profile-container {
+            background: var(--card-bg);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            position: relative;
+            border: 1px solid var(--border-color);
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            position: relative;
+        }
+        
+        .profile-pic-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-left: 1.5rem;
+            border: 3px solid var(--light);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .profile-pic {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-upload {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: var(--accent);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .profile-upload:hover {
+            background: var(--primary);
+            transform: scale(1.1);
+        }
+        
+        .profile-upload input[type="file"] {
+            display: none;
+        }
+        
+        .profile-info {
+            flex: 1;
+        }
+        
+        .profile-name {
+            font-size: 1.5rem;
+            margin: 0 0 0.5rem 0;
+            color: var(--primary);
+        }
+        
+        .profile-role {
+            color: #7f8c8d;
+            margin: 0;
+        }
+        
+        .profile-sections {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .profile-tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            font-weight: 500;
+            color: #666;
+        }
+        
+        .profile-tab:hover, .profile-tab.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+        
+        .profile-content {
+            display: none;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 8px;
+            margin: 0.5rem;
+            border: 1px solid var(--border-color);
+        }
+        
+        .profile-content.active {
+            display: block;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            flex: 1;
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--input-bg, var(--card-bg));
+            color: var(--input-text, var(--text-color));
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(77, 166, 255, 0.2);
+            outline: none;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .backup-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .backup-card {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid #eee;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .backup-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .backup-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            margin-top: 1rem;
+        }
+        
+        .success-message {
+            color: #27ae60;
+            margin-top: 1rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Dark mode icon transformation */
+        [data-theme="dark"] .theme-icon {
+            transform: rotate(180deg);
+        }
+        
+        /* Dark mode specific styles */
+        [data-theme="dark"] .form-container,
+        [data-theme="dark"] .tab,
+        [data-theme="dark"] .profile-container,
+        [data-theme="dark"] .profile-content,
+        [data-theme="dark"] table {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        [data-theme="dark"] {
+            --scrollbar-track: #1a252f;
+            --scrollbar-thumb: #3e5469;
+            --scrollbar-thumb-hover: #4d6377;
+        }
+        
+        /* Custom scrollbar for dark mode */
+        [data-theme="dark"]::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        [data-theme="dark"]::-webkit-scrollbar-track {
+            background: var(--scrollbar-track);
+        }
+        
+        [data-theme="dark"]::-webkit-scrollbar-thumb {
+            background: var(--scrollbar-thumb);
+            border-radius: 4px;
+        }
+        
+        [data-theme="dark"]::-webkit-scrollbar-thumb:hover {
+            background: var(--scrollbar-thumb-hover);
+        }
+        
+        /* Better contrast for form placeholders */
+        [data-theme="dark"] ::placeholder {
+            color: #a0aec0;
+            opacity: 1;
+        }
+        
+        /* Better contrast for disabled elements */
+        [data-theme="dark"] :disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .form-container {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--accent);
+            outline: none;
+        }
+        
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .icon-btn {
+            width: auto;
+            min-width: 42px;
+            padding: 0 12px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            background: rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-right: 10px;
+            position: relative;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        
+        .icon-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-color: transparent;
+        }
+        
+        .icon-btn:active {
+            transform: translateY(0) scale(0.98);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Theme icon styling */
+        .theme-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .theme-text {
+            display: inline-block;
+            margin-right: 8px;
+            font-size: 0.9rem;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s ease;
+        }
+        
+        /* Light mode specific styles */
+        :not([data-theme="dark"]) .icon-btn {
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            color: #f39c12; /* Orange color for sun in light mode */
+            box-shadow: 3px 3px 6px #d9d9d9, 
+                        -3px -3px 6px #ffffff;
+            width: auto;
+            padding: 0 12px;
+        }
+        
+        :not([data-theme="dark"]) .icon-btn:hover {
+            background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
+            color: #e67e22; /* Darker orange on hover */
+        }
+        
+        .btn:hover {
+            background-color: var(--dark);
+        }
+        
+        .btn-print {
+            background-color: #607d8b;
+        }
+        
+        .btn-leave {
+            background-color: var(--leave);
+        }
+        
+        .btn-delete {
+            background-color: var(--delete);
+        }
+        
+        .btn-edit {
+            background-color: var(--accent);
+        }
+        
+        .btn-print:hover {
+            background-color: #e74c3c;
+        }
+        
+        /* Counter badge animation */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        #totalSoldiersCounter {
+            transition: all 0.3s ease;
+        }
+        
+        #totalSoldiersCounter.updated {
+            animation: pulse 0.5s ease-in-out;
+            background-color: #3b82f6 !important;
+        }
+        
+        .btn-leave:hover {
+            background-color: #219653;
+        }
+        
+        .btn-delete:hover {
+            background-color: #96281b;
+        }
+        
+        .btn-edit:hover {
+            background-color: #e67e22;
+        }
+        
+        .records-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+        }
+        
+        th, td {
+            padding: 1rem;
+            text-align: right;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+        
+        th {
+            background-color: var(--table-header-bg, var(--card-bg));
+            font-weight: bold;
+            border-bottom: 2px solid var(--border-color);
+            color: #ffffff;
+        }
+        
+        tr:hover {
+            background-color: var(--hover-bg, rgba(0, 0, 0, 0.02));
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        
+        .badge-absence {
+            background-color: #ffecec;
+            color: var(--secondary);
+        }
+        
+        .badge-leave {
+            background-color: #e8f5e9;
+            color: var(--leave);
+        }
+        
+        .action-btn {
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-right: 0.3rem;
+        }
+        
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+        
+        .filter-group {
+            display: flex;
+            align-items: center;
+        }
+        
+        .filter-group label {
+            margin-left: 0.5rem;
+            margin-bottom: 0;
+        }
+        
+        .filter-group select {
+            width: auto;
+            padding: 0.5rem;
+        }
+        
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .records-container, .records-container * {
+                visibility: visible;
+            }
+            .records-container {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .btn, .form-container, .filter-container {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            th, td {
+                padding: 0.8rem;
+            }
+            
+            .filter-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="وێنە/l-h.png" alt="Logo" class="header-logo">
+        <div class="header-text">
+            <h1>لیوای ١٨ فەوجی ٣</h1>
+            <div class="view-mode-switcher">
+                <button onclick="switchViewMode('mobile')" title="شێوازی مۆبایل">
+                    <i class="fas fa-mobile-alt"></i>
+                </button>
+                <button onclick="switchViewMode('desktop')" title="شێوازی کۆمپیوتەر">
+                    <i class="fas fa-desktop"></i>
+                </button>
+            </div>
+            <p>سیستەمی بەڕێوەبردنی غیاب و مۆڵەت</p>
+        </div>
+        <img src="وێنە/l-w.png" alt="Logo" class="header-logo">
+    </div>
+    
+
+    
+    <div class="container">
+        <div style="margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; gap: 0.5rem;">
+                <button onclick="showProfilePasswordPrompt(event)" class="btn" style="width: auto; padding: 0.5rem 1rem; background: var(--primary); border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; color: white;">
+                    <i class="fas fa-user"></i> پرۆفایل
+                </button>
+                <div style="position: relative; display: inline-block;">
+                    <button onclick="promptForPassword()" class="btn" style="width: auto; padding: 0.5rem 1rem; background-color: var(--accent);">
+                        <i class="fas fa-users"></i> بەڕێوەبردنی سەربازەکان
+                        <span id="totalSoldiersCounter" style="position: absolute; top: -8px; right: -8px; background-color: #ef4444; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">0</span>
+                    </button>
+                </div>
+            </div>
+            <button id="themeToggle" class="icon-btn" title="">
+                <i class="fas fa-adjust theme-icon"></i>
+                <span class="theme-text">شێوازی ڕووناکی</span>
+            </button>
+        </div>
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('absenceFormContainer')">تۆماری غیاب</div>
+            <div class="tab" onclick="showTab('leaveFormContainer')">تۆماری مۆڵەت</div>
+            <div class="tab" onclick="showTab('recordsContainer')">تۆماری غیاب و مۆڵەت</div>
+        </div>
+        
+        <!-- Absence Form -->
+        <div id="absenceFormContainer" class="form-container">
+            <h2 style="color: var(--primary); margin-top: 0;">تۆمارکردنی غیابی نوێ</h2>
+            <form id="absenceForm">
+                <div class="form-group">
+                    <label for="soldierName">ناوی سەرباز</label>
+                    <input type="text" id="soldierName" required oninput="fillSoldierData('absence')" placeholder="ناوی سەرباز" autocomplete="off">
+                    <!-- Custom dropdown will be inserted here by JavaScript -->
+                </div>
+                
+                <div class="form-group">
+                    <label for="rank">پلە</label>
+                    <select id="rank" required>
+                        <option value="">هەڵبژێرە</option>
+                        <option value="پ.م">پ.م</option>
+                        <option value="جندي اول">جندي اول</option>
+                        <option value="نائب عریف">نائب عریف</option>
+                        <option value="عریف">عریف</option>
+                        <option value="رئیس عرفاء">رئیس عرفاء</option>
+                        <option value="ن.ض د٨">ن.ض د٨</option>
+                        <option value="ن.ض د٧">ن.ض د٧</option>
+                        <option value="ن.ض د٦">ن.ض د٦</option>
+                        <option value="ن.ض د٥">ن.ض د٥</option>
+                        <option value="ن.ض د٤">ن.ض د٤</option>
+                        <option value="ن.ض د٣">ن.ض د٣</option>
+                        <option value="ن.ض د٢">ن.ض د٢</option>
+                        <option value="ن.ض د١">ن.ض د١</option>
+                        <option value="ن.ض د/ممتاز">ن.ض د/ممتاز</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="unit">شوێن/یەکە</label>
+                    <select id="unit" required>
+                        <option value="">هەڵبژێرە</option>
+                        <option value="بارەگا">بارەگا</option>
+                        <option value="مشاة الی">مشاة الی</option>
+                        <option value="اسناد">اسناد</option>
+                        <option value="سریەی١ ف١">سریەی١ ف١</option>
+                        <option value="سریەی١ ف٢">سریەی١ ف٢</option>
+                        <option value="سریەی١ ف٣">سریەی١ ف٣</option>
+                        <option value="سریەی٢ ف١">سریەی٢ ف١</option>
+                        <option value="سریەی٢ ف٢">سریەی٢ ف٢</option>
+                        <option value="سریەی٢ ف٣">سریەی٢ ف٣</option>
+                        <option value="سریەی٣ ف١">سریەی٣ ف١</option>
+                        <option value="سریەی٣ ف٢">سریەی٣ ف٢</option>
+                        <option value="سریەی٣ ف٣">سریەی٣ ف٣</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="absenceDate">بەرواری غیاب</label>
+                    <input type="date" id="absenceDate" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="absenceReturnDate">بەرواری گەڕانەوەی غایب</label>
+                    <input type="date" id="absenceReturnDate">
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">تێبینی</label>
+                    <textarea id="notes" rows="3" placeholder="تێبینییەکان..."></textarea>
+                </div>
+                
+                <button type="button" onclick="saveRecord('absence')" class="btn">
+                    تۆمارکردنی غیاب
+                </button>
+            </form>
+        </div>
+        
+        <!-- Leave Form -->
+        <div id="leaveFormContainer" class="form-container" style="display: none;">
+            <h2 style="color: var(--leave); margin-top: 0;">تۆمارکردنی مۆڵەتی نوێ</h2>
+            <form id="leaveForm">
+                <div class="form-group">
+                    <label for="leaveSoldierName">ناوی سەرباز</label>
+                    <input type="text" id="leaveSoldierName" required oninput="fillSoldierData('leave')" placeholder="ناوی سەرباز" autocomplete="off">
+                    <!-- Custom dropdown will be inserted here by JavaScript -->
+                </div>
+                
+                <div class="form-group">
+                    <label for="leaveRank">پلە</label>
+                    <select id="leaveRank" required>
+                        <option value="">هەڵبژێرە</option>
+                        <option value="پ.م">پ.م</option>
+                        <option value="جندي اول">جندي اول</option>
+                        <option value="نائب عریف">نائب عریف</option>
+                        <option value="عریف">عریف</option>
+                        <option value="رئیس عرفاء">رئیس عرفاء</option>
+                        <option value="ن.ض د٨">ن.ض د٨</option>
+                        <option value="ن.ض د٧">ن.ض د٧</option>
+                        <option value="ن.ض د٦">ن.ض د٦</option>
+                        <option value="ن.ض د٥">ن.ض د٥</option>
+                        <option value="ن.ض د٤">ن.ض د٤</option>
+                        <option value="ن.ض د٣">ن.ض د٣</option>
+                        <option value="ن.ض د٢">ن.ض د٢</option>
+                        <option value="ن.ض د١">ن.ض د١</option>
+                        <option value="ن.ض د/ممتاز">ن.ض د/ممتاز</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="leaveUnit">شوێن/یەکە</label>
+                    <select id="leaveUnit" required>
+                        <option value="">هەڵبژێرە</option>
+                        <option value="بارەگا">بارەگا</option>
+                        <option value="مشاة الی">مشاة الی</option>
+                        <option value="اسناد">اسناد</option>
+                        <option value="سریەی١ ف١">سریەی١ ف١</option>
+                        <option value="سریەی١ ف٢">سریەی١ ف٢</option>
+                        <option value="سریەی١ ف٣">سریەی١ ف٣</option>
+                        <option value="سریەی٢ ف١">سریەی٢ ف١</option>
+                        <option value="سریەی٢ ف٢">سریەی٢ ف٢</option>
+                        <option value="سریەی٢ ف٣">سریەی٢ ف٣</option>
+                        <option value="سریەی٣ ف١">سریەی٣ ف١</option>
+                        <option value="سریەی٣ ف٢">سریەی٣ ف٢</option>
+                        <option value="سریەی٣ ف٣">سریەی٣ ف٣</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="leaveStartDate">بەرواری دەستپێک</label>
+                    <input type="date" id="leaveStartDate" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="leaveEndDate">بەرواری کۆتایی</label>
+                    <input type="date" id="leaveEndDate" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="leaveType">جۆری مۆڵەت</label>
+                    <select id="leaveType" required>
+                        <option value="">هەڵبژێرە</option>
+                        <option value="مۆڵەتی ئاسایی">مۆڵەتی ئاسایی</option>
+                        <option value="مۆڵەتی نەخۆشی">مۆڵەتی نەخۆشی</option>
+                        <option value="مۆڵەتی تایبەت">مۆڵەتی تایبەت</option>
+                        <option value="مۆڵەتی فەرمی">مۆڵەتی فەرمی</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="leaveNotes">تێبینی</label>
+                    <textarea id="leaveNotes" rows="3" placeholder="تێبینییەکان..."></textarea>
+                </div>
+                
+                <button type="button" onclick="saveRecord('leave')" class="btn btn-leave">
+                    تۆمارکردنی مۆڵەت
+                </button>
+            </form>
+        </div>
+        
+        <!-- Records Section -->
+        <div id="recordsContainer" class="form-container" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h2 style="margin: 0; color: var(--primary);">تۆماری غیاب و مۆڵەت</h2>
+                <div>
+                    <button onclick="window.print()" class="btn btn-print" style="width: auto; padding: 0.5rem 1rem;">
+                        چاپکردن
+                    </button>
+                    <button onclick="exportToExcel()" class="btn btn-leave" style="width: auto; padding: 0.5rem 1rem; margin-left: 0.5rem;">
+                        هەناردە بۆ Excel
+                    </button>
+                </div>
+            </div>
+            
+            <div class="filter-container">
+                <div class="filter-group">
+                    <label for="filterType">جۆر:</label>
+                    <select id="filterType" onchange="filterRecords()">
+                        <option value="all">هەموو</option>
+                        <option value="absence">غیاب</option>
+                        <option value="leave">مۆڵەت</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="filterYear">ساڵ:</label>
+                    <select id="filterYear" onchange="filterRecords()">
+                        <option value="all">هەموو ساڵەکان</option>
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                        <option value="2027">2027</option>
+                        <option value="2028">2028</option>
+                        <option value="2029">2029</option>
+                        <option value="2030">2030</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="filterMonth">مانگ:</label>
+                    <select id="filterMonth" onchange="filterRecords()">
+                        <option value="all">هەموو مانگەکان</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="filterUnit">یەکە:</label>
+                    <select id="filterUnit" onchange="filterRecords()">
+                        <option value="all">هەموو یەکەکان</option>
+                        <option value="بارەگا">بارەگا</option>
+                        <option value="مشاة الی">مشاة الی</option>
+                        <option value="اسناد">اسناد</option>
+                        <option value="سریەی١ ف١">سریەی١ ف١</option>
+                        <option value="سریەی١ ف٢">سریەی١ ف٢</option>
+                        <option value="سریەی١ ف٣">سریەی١ ف٣</option>
+                        <option value="سریەی٢ ف١">سریەی٢ ف١</option>
+                        <option value="سریەی٢ ف٢">سریەی٢ ف٢</option>
+                        <option value="سریەی٢ ف٣">سریەی٢ ف٣</option>
+                        <option value="سریەی٣ ف١">سریەی٣ ف١</option>
+                        <option value="سریەی٣ ف٢">سریەی٣ ف٢</option>
+                        <option value="سریەی٣ ف٣">سریەی٣ ف٣</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="filterName">ناو:</label>
+                    <input type="text" id="filterName" placeholder="ناوی سەرباز" oninput="filterRecords()">
+                </div>
+                
+                <button onclick="clearFilters()" class="btn" style="width: auto; padding: 0.5rem 1rem;">
+                    پاککردنەوەی فلتەرەکان
+                </button>
+            </div>
+            
+            <div style="overflow-x: auto;">
+                <table id="mainTable">
+                    <thead>
+                        <tr>
+                            <th>ناو</th>
+                            <th>پلە</th>
+                            <th>یەکە</th>
+                            <th>ژمارەی غیابەکان</th>
+                            <th>بەرواری غیابەکان</th>
+                            <th>ژمارەی مۆڵەتەکان</th>
+                            <th>بەرواری مۆڵەتەکان</th>
+                            <th>کۆی غیاب و مۆڵەت</th>
+                            <th>تێبینی</th>
+                            <th>کردارەکان</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recordsTable">
+                        <!-- تۆمارەکان بە شێوەیەکی خۆکارانە زیاد دەکرێن -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics Section Removed -->
+        </div>
+    </div>
+
+    <style>
+        /* View Mode Switcher */
+        .view-mode-switcher {
+            display: flex;
+            gap: 8px;
+            margin-top: 5px;
+        }
+        
+        .view-mode-switcher button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+            padding: 2px 8px;
+            transition: all 0.2s;
+        }
+        
+        .view-mode-switcher button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .view-mode-switcher button.active {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        /* Profile Overlay Styles */
+        .profile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .profile-container {
+            background-color: var(--bg-color);
+            border-radius: 10px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .profile-pic-container {
+            position: relative;
+            margin-left: 20px;
+        }
+
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+        }
+
+        .profile-upload {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: var(--primary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .profile-upload input[type="file"] {
+            display: none;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-name {
+            margin: 0;
+            color: var(--text-color);
+            font-size: 1.5rem;
+        }
+
+        .profile-role {
+            margin: 5px 0 0;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+
+        .profile-sections {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 20px;
+        }
+
+        .profile-tab {
+            padding: 15px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .profile-tab.active {
+            border-bottom-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .profile-tab i {
+            margin-left: 8px;
+        }
+
+        .profile-content {
+            padding: 20px;
+            display: none;
+        }
+
+        .profile-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: var(--input-bg, white);
+            color: var(--input-text, #333);
+        }
+
+        .btn-group {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary);
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body * {
+                visibility: hidden;
+            }
+            .form-container[style*="display: block"] {
+                visibility: visible;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                padding: 0;
+                margin: 0;
+            }
+        }
+    </style>
+
+    <!-- Add mobile view detection and redirection -->
+    <script>
+        // Check and apply view mode based on user preference or device
+        function checkViewMode() {
+            const viewMode = localStorage.getItem('viewMode');
+            const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            // If no view mode is set, redirect to device selection
+            if (!viewMode) {
+                window.location.href = 'device_selection.html';
+                return;
+            }
+            
+            // Apply the selected view mode with device check
+            applyViewMode();
+        }
+        
+        // Apply the current view mode from localStorage
+        function applyViewMode() {
+            const viewMode = localStorage.getItem('viewMode');
+            const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            // Check if current device matches the selected view mode
+            if ((viewMode === 'mobile' && !isMobileDevice) || 
+                (viewMode === 'desktop' && isMobileDevice)) {
+                // Show message about switching devices
+                const deviceType = viewMode === 'mobile' ? 'مۆبایل' : 'کۆمپیوتەر';
+                const message = `تکایە سەردانی وێبسایتەکە بکە لەسەر ${deviceType} بۆ بینینی شێوازی ${deviceType}`;
+                showMessage(message, 'warning');
+                
+                // Disable interactions in the wrong view mode
+                document.body.style.opacity = '0.6';
+                document.body.style.pointerEvents = 'none';
+                return;
+            }
+            
+            // Enable interactions if view mode matches device
+            document.body.style.opacity = '1';
+            document.body.style.pointerEvents = 'auto';
+            
+            const isMobileView = viewMode === 'mobile';
+            document.body.classList.toggle('mobile-view', isMobileView);
+            updateViewModeSwitcher(viewMode);
+            
+            if (isMobileView) {
+                let style = document.getElementById('mobile-styles');
+                if (!style) {
+                    style = document.createElement('style');
+                    style.id = 'mobile-styles';
+                    style.textContent = `
+                        @media (max-width: 768px) {
+            /* Utility classes */
+            .mobile-hide { display: none !important; }
+            .mobile-full-width { width: 100% !important; max-width: 100% !important; }
+            .mobile-stack { flex-direction: column !important; gap: 0.75rem !important; }
+            .mobile-padding { padding: 1rem !important; }
+            
+            /* Modern buttons and inputs */
+            button, .btn, input, select, textarea {
+                border-radius: 12px !important;
+                font-size: 1rem !important;
+                padding: 0.75rem 1.25rem !important;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
+            
+            /* Improved header */
+            .header {
+                padding: 0.75rem 1rem;
+                background: linear-gradient(135deg, var(--primary), #1a2c3e);
+            }
+            
+            .header h1 {
+                font-size: 1.25rem;
+                margin: 0;
+                font-weight: 700;
+                color: white;
+                text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            }
+            
+            .header-logo {
+                height: 40px;
+                width: auto;
+                filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+            }
+            
+            /* Card styles */
+            .form-container, .card {
+                border-radius: 16px !important;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
+                margin-bottom: 1.25rem;
+                border: none;
+            }
+            
+            /* Table improvements */
+            table {
+                border-collapse: separate;
+                border-spacing: 0;
+                width: 100%;
+                border-radius: 12px;
+                overflow: hidden;
+            }
+            
+            th, td {
+                padding: 0.75rem !important;
+            }
+            
+            /* Better form elements */
+            .form-group {
+                margin-bottom: 1.25rem;
+            }
+            
+            .form-group label {
+                display: block;
+                margin-bottom: 0.5rem;
+                font-weight: 600;
+                color: var(--text-color);
+            }
+            
+            /* Action buttons */
+            .action-buttons {
+                display: flex;
+                gap: 0.75rem;
+                margin-top: 1.5rem;
+            }
+            
+            /* View mode switcher */
+            .view-mode-switcher {
+                position: fixed;
+                bottom: 1.5rem;
+                left: 50%;
+                transform: translateX(-50%);
+                display: flex;
+                gap: 1rem;
+                background: rgba(255,255,255,0.9);
+                padding: 0.5rem;
+                border-radius: 50px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+                z-index: 1000;
+            }
+            
+            .view-mode-switcher button {
+                width: 48px;
+                height: 48px;
+                border-radius: 50% !important;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0 !important;
+                font-size: 1.5rem !important;
+                background: white;
+                color: var(--primary);
+                border: 2px solid var(--primary);
+                transition: all 0.2s ease;
+            }
+            
+            .view-mode-switcher button.active {
+                background: var(--primary);
+                color: white;
+                transform: scale(1.1);
+            }
+            
+            /* Better spacing for main content */
+            .container {
+                padding: 1rem;
+                margin-top: 70px;
+                margin-bottom: 100px;
+            }
+            
+            /* Improved message boxes */
+            .message {
+                padding: 1rem;
+                border-radius: 12px;
+                margin-bottom: 1rem;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+            }
+            
+            .message.success {
+                background-color: #e8f5e9;
+                color: #2e7d32;
+                border-right: 4px solid #4caf50;
+            }
+            
+            .message.error {
+                background-color: #ffebee;
+                color: #c62828;
+                border-right: 4px solid #f44336;
+            }
+            
+            .message.warning {
+                background-color: #fff8e1;
+                color: #f57f17;
+                border-right: 4px solid #ffc107;
+            }
+                        }
+                            
+                            .header h1 {
+                                font-size: 1.2rem;
+                                margin: 0.2rem 0;
+                            }
+{{ ... }}
+```
+
+            // Enhanced mobile menu functionality
+            function setupMobileMenu() {
+                const menuButton = document.createElement('button');
+                menuButton.className = 'mobile-menu-btn';
+                menuButton.innerHTML = '<i class="fas fa-bars"></i>';
+                menuButton.setAttribute('aria-label', 'پیشاندانی مینوو');
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+            } else {
+                const style = document.getElementById('mobile-styles');
+                if (style) {
+                    style.remove();
+                }
+            }
+        }
+        
+        // Function to switch view modes
+        function switchViewMode(mode) {
+            if (mode === localStorage.getItem('viewMode')) {
+                return; // Already in this mode
+            }
+            
+            // Check device type
+            const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            // If trying to switch to a mode that doesn't match the current device
+            if ((mode === 'mobile' && !isMobileDevice) || 
+                (mode === 'desktop' && isMobileDevice)) {
+                const deviceType = mode === 'mobile' ? 'مۆبایل' : 'کۆمپیوتەر';
+                const message = `تکایە سەردانی وێبسایتەکە بکە لەسەر ${deviceType} بۆ بینینی شێوازی ${deviceType}`;
+                showMessage(message, 'warning');
+                return;
+            }
+            
+            // Save the new view mode preference
+            localStorage.setItem('viewMode', mode);
+            
+            // Reload the page to apply the new view mode
+            window.location.reload();
+        }
+        
+        // Check view mode on page load
+        // Enhanced mobile menu functionality
+        function setupMobileMenu() {
+            const menuButton = document.createElement('button');
+            menuButton.className = 'mobile-menu-btn';
+            menuButton.innerHTML = '<i class="fas fa-bars"></i>';
+            menuButton.setAttribute('aria-label', 'پیشاندانی مینوو');
+            
+            const header = document.querySelector('.header');
+            const nav = document.querySelector('.header-actions');
+            
+            if (header && nav) {
+                header.insertBefore(menuButton, header.firstChild);
+                
+                // Toggle menu on button click
+                menuButton.addEventListener('click', function() {
+                    nav.classList.toggle('show');
+                    menuButton.innerHTML = nav.classList.contains('show') ? 
+                        '<i class="fas fa-times"></i>' : 
+                        '<i class="fas fa-bars"></i>';
+                });
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!nav.contains(event.target) && !menuButton.contains(event.target)) {
+                        nav.classList.remove('show');
+                        menuButton.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                });
+                
+                // Add animation to menu items
+                const menuItems = nav.querySelectorAll('button, a');
+                menuItems.forEach((item, index) => {
+                    item.style.animationDelay = `${index * 50}ms`;
+                    item.classList.add('fade-in');
+                });
+                
+                // Add haptic feedback on mobile
+                menuItems.forEach(item => {
+                    item.addEventListener('touchstart', function() {
+                        this.style.transform = 'scale(0.98)';
+                    }, { passive: true });
+                    
+                    item.addEventListener('touchend', function() {
+                        this.style.transform = '';
+                    }, { passive: true });
+                });
+            }
+        }
+        
+        // Add visual feedback for buttons
+        function setupButtonFeedback() {
+            const buttons = document.querySelectorAll('button, .btn, [role="button"]');
+            
+            buttons.forEach(button => {
+                // Touch feedback
+                button.addEventListener('touchstart', function() {
+                    this.classList.add('active');
+                }, { passive: true });
+                
+                button.addEventListener('touchend', function() {
+                    this.classList.remove('active');
+                }, { passive: true });
+                
+                // Keyboard navigation
+                button.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        this.classList.add('active');
+                    }
+                });
+                
+                button.addEventListener('keyup', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        this.classList.remove('active');
+                    }
+                });
+            });
+        }
+        
+        // Optimize tables for mobile
+        function optimizeTables() {
+            const tables = document.querySelectorAll('table');
+            
+            tables.forEach(table => {
+                // Make tables horizontally scrollable on mobile
+                const wrapper = document.createElement('div');
+                wrapper.className = 'table-responsive';
+                table.parentNode.insertBefore(wrapper, table);
+                wrapper.appendChild(table);
+                
+                // Add visual indicator for horizontal scroll
+                if (table.scrollWidth > table.clientWidth) {
+                    wrapper.style.position = 'relative';
+                    wrapper.style.paddingBottom = '15px';
+                    
+                    const scrollHint = document.createElement('div');
+                    scrollHint.style.position = 'absolute';
+                    scrollHint.style.bottom = '0';
+                    scrollHint.style.left = '0';
+                    scrollHint.style.right = '0';
+                    scrollHint.style.height = '5px';
+                    scrollHint.style.background = 'linear-gradient(to right, transparent, var(--primary), transparent)';
+                    scrollHint.style.opacity = '0.5';
+                    wrapper.appendChild(scrollHint);
+                }
+            });
+        }
+        
+        // Profile section functions
+        function showProfileSection() {
+            const overlay = document.getElementById('profileOverlay');
+            if (overlay) {
+                overlay.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+                showProfileTab('profile');
+            }
+        }
+
+        function hideProfileSection() {
+            const overlay = document.getElementById('profileOverlay');
+            if (overlay) {
+                overlay.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function showProfileTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.profile-content');
+            tabContents.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Deactivate all tabs
+            const tabs = document.querySelectorAll('.profile-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected tab content
+            const activeTabContent = document.getElementById(tabName + 'Tab');
+            if (activeTabContent) {
+                activeTabContent.classList.add('active');
+            }
+
+            // Activate clicked tab
+            const activeTab = Array.from(tabs).find(tab => 
+                tab.getAttribute('onclick')?.includes(tabName)
+            );
+            if (activeTab) {
+                activeTab.classList.add('active');
+            }
+        }
+
+        function checkProfilePassword() {
+            // For now, just show the profile section
+            // In a real app, you might want to add password verification here
+            showProfileSection();
+        }
+
+        // Update view mode switcher UI
+        function updateViewModeSwitcher(mode) {
+            const switcher = document.querySelector('.view-mode-switcher');
+            if (!switcher) return;
+            
+            const mobileBtn = switcher.querySelector('button:first-child');
+            const desktopBtn = switcher.querySelector('button:last-child');
+            
+            if (mode === 'mobile') {
+                mobileBtn.classList.add('active');
+                desktopBtn.classList.remove('active');
+            } else {
+                mobileBtn.classList.remove('active');
+                desktopBtn.classList.add('active');
+            }
+        }
+        
+        // Initialize mobile enhancements
+        document.addEventListener('DOMContentLoaded', function() {
+            checkViewMode();
+            
+            if (document.body.classList.contains('mobile-view')) {
+                setupMobileMenu();
+                setupButtonFeedback();
+                optimizeTables();
+                
+                // Add loading animation
+                const loadingAnimation = document.createElement('div');
+                loadingAnimation.id = 'loading-animation';
+                loadingAnimation.style.position = 'fixed';
+                loadingAnimation.style.top = '0';
+                loadingAnimation.style.left = '0';
+                loadingAnimation.style.width = '100%';
+                loadingAnimation.style.height = '3px';
+                loadingAnimation.style.backgroundColor = 'var(--primary)';
+                loadingAnimation.style.transform = 'scaleX(0)';
+                loadingAnimation.style.transformOrigin = 'left';
+                loadingAnimation.style.transition = 'transform 0.3s ease';
+                loadingAnimation.style.zIndex = '9999';
+                document.body.appendChild(loadingAnimation);
+                
+                // Show loading state during page transitions
+                document.addEventListener('click', function(e) {
+                    if (e.target.closest('a') || e.target.closest('button')) {
+                        loadingAnimation.style.transform = 'scaleX(0.3)';
+                        setTimeout(() => {
+                            loadingAnimation.style.transform = 'scaleX(1)';
+                        }, 10);
+                        
+                        setTimeout(() => {
+                            loadingAnimation.style.transform = 'scaleX(0)';
+                        }, 300);
+                    }
+                });
+                
+                // Add pull-to-refresh effect
+                let startY;
+                let touchStart = false;
+                const refreshContainer = document.createElement('div');
+                refreshContainer.id = 'pull-to-refresh';
+                refreshContainer.style.position = 'fixed';
+                refreshContainer.style.top = '0';
+                refreshContainer.style.left = '0';
+                refreshContainer.style.right = '0';
+                refreshContainer.style.height = '0';
+                refreshContainer.style.overflow = 'hidden';
+                refreshContainer.style.display = 'flex';
+                refreshContainer.style.justifyContent = 'center';
+                refreshContainer.style.alignItems = 'center';
+                refreshContainer.style.background = 'var(--primary)';
+                refreshContainer.style.color = 'white';
+                refreshContainer.style.transition = 'height 0.3s ease';
+                refreshContainer.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> نوێکردنەوە...';
+                document.body.insertBefore(refreshContainer, document.body.firstChild);
+                
+                document.addEventListener('touchstart', function(e) {
+                    if (window.scrollY === 0) {
+                        startY = e.touches[0].pageY;
+                        touchStart = true;
+                    }
+                }, { passive: true });
+                
+                document.addEventListener('touchmove', function(e) {
+                    if (!touchStart) return;
+                    
+                    const y = e.touches[0].pageY;
+                    const diff = y - startY;
+                    
+                    if (diff > 0) {
+                        e.preventDefault();
+                        const height = Math.min(diff, 100);
+                        refreshContainer.style.height = height + 'px';
+                        
+                        if (height >= 80) {
+                            refreshContainer.style.opacity = '1';
+                        } else {
+                            refreshContainer.style.opacity = (height / 80).toString();
+                        }
+                    }
+                }, { passive: false });
+                
+                document.addEventListener('touchend', function() {
+                    if (parseInt(refreshContainer.style.height) >= 80) {
+                        refreshContainer.style.height = '60px';
+                        refreshContainer.innerHTML = '<i class="fas fa-check"></i> نوێکرایەوە!';
+                        
+                        // Simulate refresh
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 800);
+                    } else {
+                        refreshContainer.style.height = '0';
+                    }
+                    
+                    touchStart = false;
+                }, { passive: true });
+            }
+            
+            // Add view mode switcher for testing
+            const viewModeSwitcher = document.createElement('div');
+            viewModeSwitcher.style.position = 'fixed';
+            viewModeSwitcher.style.bottom = '10px';
+            viewModeSwitcher.style.left = '10px';
+            viewModeSwitcher.style.zIndex = '1000';
+            viewModeSwitcher.style.display = 'flex';
+            viewModeSwitcher.style.gap = '5px';
+            
+            const mobileBtn = document.createElement('button');
+            mobileBtn.textContent = '📱';
+            mobileBtn.title = 'Mobile View';
+            mobileBtn.onclick = () => switchViewMode('mobile');
+            
+            const desktopBtn = document.createElement('button');
+            desktopBtn.textContent = '💻';
+            desktopBtn.title = 'Desktop View';
+            desktopBtn.onclick = () => switchViewMode('desktop');
+            
+            viewModeSwitcher.appendChild(mobileBtn);
+            viewModeSwitcher.appendChild(desktopBtn);
+            
+            // Only show in development
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                document.body.appendChild(viewModeSwitcher);
+            }
+        });
+    </script>
+    
+    <script>
+        // Dark mode functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = themeToggle.querySelector('i');
+            
+            // Check for saved user preference, if any
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            if (currentTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i> شێوازی ڕووناک';
+            }
+            
+            // Toggle theme on button click
+            themeToggle.addEventListener('click', function() {
+                let theme = 'light';
+                if (document.documentElement.getAttribute('data-theme') !== 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    theme = 'dark';
+                    themeIcon.classList.replace('fa-moon', 'fa-sun');
+                    this.innerHTML = '<i class="fas fa-sun"></i> شێوازی ڕووناک';
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                    themeIcon.classList.replace('fa-sun', 'fa-moon');
+                    this.innerHTML = '<i class="fas fa-moon"></i> شێوازی تاریک';
+                }
+                localStorage.setItem('theme', theme);
+            });
+        });
+        
+        // Show/hide tabs
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.form-container').forEach(container => {
+                container.style.display = 'none';
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            if (tabName === 'absenceFormContainer') {
+                document.getElementById('absenceFormContainer').style.display = 'block';
+                document.querySelector('.tab:nth-child(1)').classList.add('active');
+            } else if (tabName === 'leaveFormContainer') {
+                document.getElementById('leaveFormContainer').style.display = 'block';
+                document.querySelector('.tab:nth-child(2)').classList.add('active');
+            } else if (tabName === 'recordsContainer') {
+                document.getElementById('recordsContainer').style.display = 'block';
+                document.querySelector('.tab:nth-child(3)').classList.add('active');
+                filterRecords();
+            } else if (tabName === 'weeklyReportContainer') {
+                document.getElementById('weeklyReportContainer').style.display = 'block';
+                document.querySelector('.tab:nth-child(4)').classList.add('active');
+                generateWeeklyReport();
+            }
+        }
+        
+        async function saveToGoogleSheets(data) {
+            const SCRIPT_URL = 'https://script.google.com/macros/s/1ATA3PdQPhhaPikTFtJgDWZ3vlsV0zMYkCV8KXnpwsnu73yKtgUjOBiBI/exec';
+            
+            try {
+                data.timestamp = new Date().toISOString();
+                
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                return { status: 'success', message: 'زانیارییەکان نێردران' };
+            } catch (error) {
+                console.error('هەڵە لە ناردنی زانیارییەکان:', error);
+                throw error;
+            }
+        }
+        
+        // Save records
+        async function saveRecord(type) {
+            try {
+                if(type === 'absence') {
+                    const soldierName = document.getElementById('soldierName').value;
+                    const soldiers = JSON.parse(localStorage.getItem('soldiers')) || [];
+                    const soldierExists = soldiers.some(s => s.name === soldierName);
+                    
+                    if (!soldierExists) {
+                        alert("تکایە ناوی سەربازێکی تۆمارکراو هەڵبژێرە!");
+                        return;
+                    }
+                    
+                    const data = {
+                        type: 'absence',
+                        name: soldierName,
+                        rank: document.getElementById('rank').value,
+                        unit: document.getElementById('unit').value,
+                        date: document.getElementById('absenceDate').value,
+                        returnDate: document.getElementById('absenceReturnDate').value || '',
+                        notes: document.getElementById('notes').value || ''
+                    };
+                    
+                    if (!data.name || !data.rank || !data.unit || !data.date) {
+                        alert("تکایە هەموو خانە پڕەکان پڕ بکەرەوە!");
+                        return;
+                    }
+                    
+                    // Save to Google Sheets
+                    await saveToGoogleSheets(data);
+                    
+                    // Update UI
+                    const table = document.getElementById('recordsTable');
+                    const row = table.insertRow(0);
+                    row.className = 'absence';
+                    row.setAttribute('data-date', data.date);
+                    row.setAttribute('data-unit', data.unit);
+                    row.innerHTML = `
+                        <td>${data.name}</td>
+                        <td>${data.rank}</td>
+                        <td>${data.unit}</td>
+                        <td><span class="badge badge-absence">غیاب</span></td>
+                        <td>${data.date}${data.returnDate ? ' - ' + data.returnDate : ''}</td>
+                        <td>${data.notes || '-'}</td>
+                        <td>
+                            <button onclick="editRecord(this)" class="action-btn" style="background-color: var(--accent);">گۆڕانکاری</button>
+                            <button onclick="deleteRecord(this)" class="action-btn" style="background-color: var(--delete);">سڕینەوە</button>
+                        </td>
+                    `;
+                    
+                    document.getElementById('absenceForm').reset();
+                    saveRecordsToStorage();
+                    alert("تۆمارەکەت بە سەرکەوتوویی تۆمارکرا!");
+                } else {
+                    const soldierName = document.getElementById('leaveSoldierName').value;
+                    const soldiers = JSON.parse(localStorage.getItem('soldiers')) || [];
+                    const soldierExists = soldiers.some(s => s.name === soldierName);
+                    
+                    if (!soldierExists) {
+                        alert("تکایە ناوی سەربازێکی تۆمارکراو هەڵبژێرە!");
+                        return;
+                    }
+                    
+                    const data = {
+                        type: 'leave',
+                        name: soldierName,
+                        rank: document.getElementById('leaveRank').value,
+                        unit: document.getElementById('leaveUnit').value,
+                        startDate: document.getElementById('leaveStartDate').value,
+                        endDate: document.getElementById('leaveEndDate').value,
+                        leaveType: document.getElementById('leaveType').value,
+                        notes: document.getElementById('leaveNotes').value || ''
+                    };
+                    
+                    if (!data.name || !data.rank || !data.unit || !data.startDate || !data.endDate || !data.leaveType) {
+                        alert("تکایە هەموو خانە پڕەکان پڕ بکەرەوە!");
+                        return;
+                    }
+                    
+                    // Save to Google Sheets
+                    await saveToGoogleSheets(data);
+                    
+                    // Update UI
+                    const table = document.getElementById('recordsTable');
+                    const row = table.insertRow(0);
+                    row.className = 'leave';
+                    row.setAttribute('data-date', data.startDate);
+                    row.setAttribute('data-unit', data.unit);
+                    row.innerHTML = `
+                        <td>${data.name}</td>
+                        <td>${data.rank}</td>
+                        <td>${data.unit}</td>
+                        <td><span class="badge badge-leave">مۆڵەت</span></td>
+                        <td>${data.startDate} - ${data.endDate}</td>
+                        <td>${data.leaveType}${data.notes ? '<br>' + data.notes : ''}</td>
+                        <td>
+                            <button onclick="editRecord(this)" class="action-btn" style="background-color: var(--accent);">گۆڕانکاری</button>
+                            <button onclick="deleteRecord(this)" class="action-btn" style="background-color: var(--delete);">سڕینەوە</button>
+                        </td>
+                    `;
+                    
+                    document.getElementById('leaveForm').reset();
+                    saveRecordsToStorage();
+                    alert("تۆمارەکەت بە سەرکەوتوویی تۆمارکرا!");
+                }
+            } catch (error) {
+                console.error('Error saving record:', error);
+                alert("هەڵەیەک ڕوویدا لە کاتی پەیوەندیکردن بە سێرڤەرەوە");
+            }
+        }
+        
+        // Save records to localStorage
+        function saveRecordsToStorage() {
+            const table = document.getElementById('recordsTable');
+            const records = [];
+            
+            // هەموو ڕیزەکان کۆبکەرەوە
+            table.querySelectorAll('tr').forEach(row => {
+                const cells = row.querySelectorAll('td');
+                const isLeave = row.classList.contains('leave');
+                
+                records.push({
+                    type: isLeave ? 'leave' : 'absence',
+                    name: cells[0].textContent,
+                    rank: cells[1].textContent,
+                    unit: cells[2].textContent,
+                    date: cells[4].textContent,
+                    notes: cells[5].textContent,
+                    rowClass: row.className,
+                    dataDate: row.getAttribute('data-date'),
+                    dataUnit: row.getAttribute('data-unit')
+                });
+            });
+            
+            // هەڵگرتنی تۆمارەکان لە localStorage
+            localStorage.setItem('militaryRecords', JSON.stringify(records));
+        }
+        
+        // Load records from localStorage
+        function loadRecordsFromStorage() {
+            const savedRecords = localStorage.getItem('militaryRecords');
+            if (!savedRecords) return;
+            
+            const records = JSON.parse(savedRecords);
+            const table = document.getElementById('recordsTable');
+            table.innerHTML = ''; // Clear previous options
+            
+            records.forEach(record => {
+                const row = table.insertRow(0);
+                row.className = record.rowClass;
+                row.setAttribute('data-date', record.dataDate);
+                row.setAttribute('data-unit', record.dataUnit);
+                
+                if (record.type === 'absence') {
+                    row.innerHTML = `
+                        <td>${record.name}</td>
+                        <td>${record.rank}</td>
+                        <td>${record.unit}</td>
+                        <td><span class="badge badge-absence">غیاب</span></td>
+                        <td>${record.date}</td>
+                        <td>${record.notes}</td>
+                        <td>
+                            <button onclick="editRecord(this)" class="action-btn" style="background-color: var(--accent);">گۆڕانکاری</button>
+                            <button onclick="deleteRecord(this)" class="action-btn" style="background-color: var(--delete);">سڕینەوە</button>
+                        </td>
+                    `;
+                } else {
+                    row.innerHTML = `
+                        <td>${record.name}</td>
+                        <td>${record.rank}</td>
+                        <td>${record.unit}</td>
+                        <td><span class="badge badge-leave">مۆڵەت</span></td>
+                        <td>${record.date}</td>
+                        <td>${record.notes}</td>
+                        <td>
+                            <button onclick="editRecord(this)" class="action-btn" style="background-color: var(--accent);">گۆڕانکاری</button>
+                            <button onclick="deleteRecord(this)" class="action-btn" style="background-color: var(--delete);">سڕینەوە</button>
+                        </td>
+                    `;
+                }
+            });
+        }
+        
+        // Edit record
+        function editRecord(button) {
+            const row = button.closest('tr');
+            const cells = row.querySelectorAll('td');
+            const isLeave = row.classList.contains('leave');
+
+            // زانیارییەکانی ڕیزەکە وەربگرە
+            const name = cells[0].textContent;
+            const rank = cells[1].textContent;
+            const unit = cells[2].textContent;
+            const notes = cells[5].textContent;
+
+            if (isLeave) {
+                // گۆڕانکاری مۆڵەت
+                const dates = cells[4].textContent.split(' - ');
+                const leaveType = cells[5].textContent.split('\n')[0]; // جۆری مۆڵەت
+
+                document.getElementById('leaveSoldierName').value = name;
+                document.getElementById('leaveRank').value = rank;
+                document.getElementById('leaveUnit').value = unit;
+                document.getElementById('leaveStartDate').value = dates[0];
+                document.getElementById('leaveEndDate').value = dates[1];
+                document.getElementById('leaveType').value = leaveType;
+                document.getElementById('leaveNotes').value = notes.replace(leaveType, '').trim();
+
+                // فۆرمی مۆڵەت پیشان بدە
+                showTab('leave');
+            } else {
+                // گۆڕانکاری غیاب
+                const dates = cells[4].textContent.split(' - ');
+                const absenceDate = dates[0];
+                const returnDate = dates.length > 1 ? dates[1] : '';
+
+                document.getElementById('soldierName').value = name;
+                document.getElementById('rank').value = rank;
+                document.getElementById('unit').value = unit;
+                document.getElementById('absenceDate').value = absenceDate;
+                document.getElementById('absenceReturnDate').value = returnDate;
+                document.getElementById('notes').value = notes;
+
+                // فۆرمی غیاب پیشان بدە
+                showTab('absence');
+            }
+
+            // ڕیزەکە بسڕەوە (بۆ ئەوەی دووبارە تۆمار نەکرێتەوە)
+            row.remove();
+            saveRecordsToStorage();
+        }
+        
+        // Delete record
+        function deleteRecord(button) {
+            const password = prompt("بۆ سڕینەوە، تکایە پاسوۆرد بنووسە:", "");
+            if (password === "1234") {
+                if(confirm("دڵنیای لە سڕینەوەی ئەم تۆمارە؟")) {
+                    const row = button.closest('tr');
+                    row.remove();
+                    saveRecordsToStorage(); // تۆمارەکان هەڵبگرە دوای سڕینەوە
+                    alert("تۆمارەکە بە سەرکەوتوویی سڕایەوە!");
+                }
+            } else if (password !== null && password !== "") {
+                alert("پاسوۆرد هەڵەیە!");
+            }
+        }
+        
+        // Filter records
+        function filterRecords() {
+            const typeFilter = document.getElementById('filterType').value;
+            const yearFilter = document.getElementById('filterYear').value;
+            const monthFilter = document.getElementById('filterMonth').value;
+            const unitFilter = document.getElementById('filterUnit').value;
+            const nameFilter = document.getElementById('filterName').value.toLowerCase();
+            
+            const rows = document.querySelectorAll('#recordsTable tr');
+            
+            rows.forEach(row => {
+                const rowType = row.classList.contains('absence') ? 'absence' : 'leave';
+                const rowDate = row.getAttribute('data-date');
+                const rowYear = rowDate ? rowDate.split('-')[0] : '';
+                const rowMonth = rowDate ? rowDate.split('-')[1] : '';
+                const rowUnit = row.getAttribute('data-unit') || '';
+                const rowName = row.querySelector('td:first-child').textContent.toLowerCase();
+                
+                let showRow = true;
+                
+                // Apply type filter
+                if(typeFilter !== 'all' && rowType !== typeFilter) {
+                    showRow = false;
+                }
+                
+                // Apply year filter
+                if(yearFilter !== 'all' && rowYear !== yearFilter) {
+                    showRow = false;
+                }
+                
+                // Apply month filter
+                if(monthFilter !== 'all' && rowMonth !== monthFilter) {
+                    showRow = false;
+                }
+                
+                // Apply unit filter
+                if(unitFilter !== 'all' && rowUnit !== unitFilter) {
+                    showRow = false;
+                }
+                
+                // Apply name filter
+                if(nameFilter && !rowName.includes(nameFilter)) {
+                    showRow = false;
+                }
+                
+                row.style.display = showRow ? '' : 'none';
+            });
+        }
+        
+        // Clear all filters
+        function clearFilters() {
+            document.getElementById('filterType').value = 'all';
+            document.getElementById('filterYear').value = 'all';
+            document.getElementById('filterMonth').value = 'all';
+            document.getElementById('filterUnit').value = 'all';
+            document.getElementById('filterName').value = '';
+            filterRecords();
+        }
+        
+        // Export to Excel
+        function exportToExcel() {
+            // Create a temporary table with only visible rows
+            const originalTable = document.getElementById('mainTable');
+            const tempTable = originalTable.cloneNode(true);
+            
+            // Remove hidden rows
+            const rows = tempTable.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                if(row.style.display === 'none') {
+                    row.remove();
+                }
+            });
+            
+            // Create HTML content
+            const html = tempTable.outerHTML;
+            
+            // Create download link
+            const blob = new Blob([html], {type: 'application/vnd.ms-excel'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'تۆماری_غیاب_و_مۆڵەت.xls';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+        
+        // Track the currently open dropdown
+        let currentOpenDropdown = null;
+        
+        // Function to close any open dropdown
+        function closeCurrentDropdown() {
+            if (currentOpenDropdown) {
+                currentOpenDropdown.style.display = 'none';
+                currentOpenDropdown = null;
+            }
+        }
+        
+        // Load soldiers and setup search functionality
+        function loadSoldiersForSearch() {
+            try {
+                // Get soldiers from localStorage or initialize empty array
+                const soldiers = JSON.parse(localStorage.getItem('soldiers') || '[]');
+                
+                // Function to create a search result item
+                const createSearchResultItem = (soldier, inputElement) => {
+                    const div = document.createElement('div');
+                    div.className = 'search-result-item';
+                    div.style.padding = '8px 12px';
+                    div.style.cursor = 'pointer';
+                    div.style.borderBottom = '1px solid #eee';
+                    div.style.direction = 'rtl';
+                    div.style.textAlign = 'right';
+                    div.style.fontFamily = "'Tajawal', sans-serif";
+                    
+                    // Add hover effect
+                    div.addEventListener('mouseenter', () => {
+                        div.style.backgroundColor = '#f3f4f6';
+                    });
+                    div.addEventListener('mouseleave', () => {
+                        div.style.backgroundColor = '';
+                    });
+                    
+                    // Highlight matching text
+                    const name = soldier.name;
+                    const rank = soldier.rank || 'بێ پلە';
+                    const unit = soldier.unit || 'بێ یەکە';
+                    
+                    div.innerHTML = `
+                        <div style="font-weight: 500; color: #1e40af;">${name}</div>
+                        <div style="font-size: 0.85em; color: #4b5563;">
+                            ${rank} - ${unit}
+                        </div>
+                    `;
+                    
+                    // Handle click on search result
+                    div.addEventListener('click', () => {
+                        inputElement.value = name;
+                        
+                        // Update corresponding fields
+                        const formType = inputElement.id === 'soldierName' ? 'absence' : 'leave';
+                        const rankInput = formType === 'absence' 
+                            ? document.getElementById('rank') 
+                            : document.getElementById('leaveRank');
+                        const unitInput = formType === 'absence'
+                            ? document.getElementById('unit')
+                            : document.getElementById('leaveUnit');
+                            
+                        if (rankInput) rankInput.value = soldier.rank || '';
+                        if (unitInput) unitInput.value = soldier.unit || '';
+                        
+                        // Hide dropdown
+                        const dropdown = inputElement.nextElementSibling;
+                        if (dropdown && dropdown.classList.contains('search-results-dropdown')) {
+                            dropdown.style.display = 'none';
+                        }
+                    });
+                    
+                    return div;
+                };
+                
+                // Function to show search results
+                const showSearchResults = (inputElement, results) => {
+                    // Close any currently open dropdown
+                    closeCurrentDropdown();
+                    
+                    if (results.length === 0) return;
+                    
+                    // Create dropdown container
+                    const dropdown = document.createElement('div');
+                    dropdown.className = 'search-results-dropdown';
+                    dropdown.style.position = 'absolute';
+                    dropdown.style.width = inputElement.offsetWidth + 'px';
+                    dropdown.style.maxHeight = '300px';
+                    dropdown.style.overflowY = 'auto';
+                    dropdown.style.background = 'white';
+                    dropdown.style.border = '1px solid #d1d5db';
+                    dropdown.style.borderRadius = '4px';
+                    dropdown.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+                    dropdown.style.zIndex = '1000';
+                    dropdown.style.marginTop = '4px';
+                    
+                    // Set this as the current open dropdown
+                    currentOpenDropdown = dropdown;
+                    
+                    // Add results to dropdown
+                    results.forEach(soldier => {
+                        dropdown.appendChild(createSearchResultItem(soldier, inputElement));
+                    });
+                    
+                    // Insert after input
+                    inputElement.parentNode.insertBefore(dropdown, inputElement.nextSibling);
+                };
+                
+                // Function to setup search for an input field
+                const setupSearch = (inputElement) => {
+                    if (!inputElement) return;
+                    
+                    // Add wrapper for positioning
+                    const wrapper = document.createElement('div');
+                    wrapper.style.position = 'relative';
+                    wrapper.style.display = 'inline-block';
+                    wrapper.style.width = '100%';
+                    inputElement.parentNode.insertBefore(wrapper, inputElement);
+                    wrapper.appendChild(inputElement);
+                    
+                    // Show all soldiers when input is focused
+                    inputElement.addEventListener('focus', () => {
+                        showSearchResults(inputElement, soldiers);
+                    });
+                    
+                    // Add input event listener for filtering
+                    inputElement.addEventListener('input', (e) => {
+                        const searchTerm = e.target.value.trim().toLowerCase();
+                        
+                        // If input is empty, show all soldiers
+                        if (!searchTerm) {
+                            showSearchResults(inputElement, soldiers);
+                            return;
+                        }
+                        
+                        // Filter soldiers based on search term
+                        const results = soldiers.filter(soldier => 
+                            soldier.name.toLowerCase().includes(searchTerm) ||
+                            (soldier.rank && soldier.rank.toLowerCase().includes(searchTerm)) ||
+                            (soldier.unit && soldier.unit.toLowerCase().includes(searchTerm))
+                        );
+                        
+                        // Show filtered results
+                        showSearchResults(inputElement, results);
+                    });
+                    
+                    // Close dropdown when clicking outside
+                    document.addEventListener('click', (e) => {
+                        const dropdown = inputElement.nextElementSibling;
+                        if (dropdown && dropdown.classList.contains('search-results-dropdown') && 
+                            !dropdown.contains(e.target) && e.target !== inputElement) {
+                            closeCurrentDropdown();
+                        }
+                    });
+                    
+                    // Close dropdown when selecting an item
+                    inputElement.addEventListener('select', () => {
+                        closeCurrentDropdown();
+                    });
+                    
+                    // Prevent form submission when pressing Enter on dropdown items
+                    inputElement.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                        }
+                    });
+                };
+                
+                // Setup search for both forms
+                setupSearch(document.getElementById('soldierName'));
+                setupSearch(document.getElementById('leaveSoldierName'));
+                
+                // Function to get display text for a soldier
+                const getSoldierDisplayText = (soldier) => {
+                    return `${soldier.name} (${soldier.rank || 'بێ پلە'} - ${soldier.unit || 'بێ یەکە'})`;
+                };
+                
+                // Function to extract soldier name from display text
+                const extractSoldierName = (displayText) => {
+                    if (!displayText) return '';
+                    // Extract name part before the first parenthesis
+                    const match = displayText.match(/^([^(]+)/);
+                    return match ? match[0].trim() : displayText.trim();
+                };
+                
+            } catch (error) {
+                console.error('هەڵە لە بارکردنی ناوی سەربازەکان بۆ گەڕان:', error);
+            }
+        }
+
+        // Fill soldier data automatically when a name is selected
+        function fillSoldierData(type) {
+            try {
+                const soldiers = JSON.parse(localStorage.getItem('soldiers') || '[]');
+                let nameInput, rankInput, unitInput;
+
+                if (type === 'absence') {
+                    nameInput = document.getElementById('soldierName');
+                    rankInput = document.getElementById('rank');
+                    unitInput = document.getElementById('unit');
+                } else { // leave
+                    nameInput = document.getElementById('leaveSoldierName');
+                    rankInput = document.getElementById('leaveRank');
+                    unitInput = document.getElementById('leaveUnit');
+                }
+                
+                if (!nameInput) return;
+                
+                const inputValue = nameInput.value.trim();
+                if (!inputValue) {
+                    if (rankInput) rankInput.value = '';
+                    if (unitInput) unitInput.value = '';
+                    return;
+                }
+                
+                // Try to find the soldier in the soldiers array
+                const selectedSoldier = soldiers.find(soldier => {
+                    // Check if input matches the display format: "Name (Rank - Unit)"
+                    const displayMatch = inputValue === `${soldier.name} (${soldier.rank || 'بێ پلە'} - ${soldier.unit || 'بێ یەکە'})`;
+                    // Check if input matches just the name
+                    const nameMatch = inputValue === soldier.name;
+                    // Check if input contains the name
+                    const containsName = inputValue.includes(soldier.name);
+                    
+                    return displayMatch || nameMatch || containsName;
+                });
+                
+                if (selectedSoldier) {
+                    if (rankInput) rankInput.value = selectedSoldier.rank || '';
+                    if (unitInput) unitInput.value = selectedSoldier.unit || '';
+                } else {
+                    // Clear fields if no match is found
+                    if (rankInput) rankInput.value = '';
+                    if (unitInput) unitInput.value = '';
+                }
+            } catch (error) {
+                console.error('هەڵە لە پڕکردنەوەی زانیارییەکانی سەرباز:', error);
+            }
+        }
+
+        function promptForPassword() {
+            const password = prompt("تکایە پاسوۆرد بنووسە:", "");
+            if (password === "1234") {
+                sessionStorage.setItem('isLoggedIn', 'true');
+                // Open in a new tab
+                const newWindow = window.open("soldiers.html", "_blank");
+                // Update counter when returning from soldiers management
+                if (newWindow) {
+                    window.addEventListener('focus', function onFocus() {
+                        updateTotalSoldiersCounter();
+                        window.removeEventListener('focus', onFocus);
+                    }, { once: true });
+                }
+            } else if (password !== null && password !== "") {
+                alert("پاسوۆرد هەڵەیە!");
+            }
+        }
+
+        // Initialize sample soldiers data if none exists
+        function initializeSampleSoldiers() {
+            if (!localStorage.getItem('soldiers')) {
+                const sampleSoldiers = [
+                    { name: 'ئەحمەد محەممەد', rank: 'ن.ض د٤', unit: 'بارەگا' },
+                    { name: 'حوسێن عەلی', rank: 'عریف', unit: 'مشاة الی' },
+                    { name: 'کەریم عەبدوڵا', rank: 'ن.ض د٣', unit: 'سریەی١ ف١' },
+                    { name: 'عەلی حەسەن', rank: 'نائب عریف', unit: 'سریەی٢ ف٢' },
+                    { name: 'مەحموود عەباس', rank: 'پ.م', unit: 'اسناد' }
+                ];
+                localStorage.setItem('soldiers', JSON.stringify(sampleSoldiers));
+            }
+        }
+
+        // Load soldiers data for autocomplete
+        function loadSoldiers() {
+            try {
+                // Ensure we have sample data if no soldiers exist
+                initializeSampleSoldiers();
+                
+                // Get soldiers from localStorage
+                const soldiers = JSON.parse(localStorage.getItem('soldiers')) || [];
+                
+                // Update the total soldiers counter
+                updateTotalSoldiersCounter();
+                
+                // Load soldiers into search datalists
+                loadSoldiersForSearch();
+                
+                // Log the number of loaded soldiers for debugging
+                console.log(`Loaded ${soldiers.length} soldiers for autocomplete`);
+            } catch (error) {
+                console.error('Error loading soldiers:', error);
+            }
+        }
+        
+        // Fill soldier data when a name is selected
+        function fillSoldierData(formType) {
+            try {
+                const soldiers = JSON.parse(localStorage.getItem('soldiers')) || [];
+                const nameInput = document.getElementById(formType === 'absence' ? 'soldierName' : 'leaveSoldierName');
+                const selectedSoldier = soldiers.find(s => s.name === nameInput.value);
+                
+                if (selectedSoldier) {
+                    if (formType === 'absence') {
+                        document.getElementById('rank').value = selectedSoldier.rank || '';
+                        document.getElementById('unit').value = selectedSoldier.unit || '';
+                    } else {
+                        document.getElementById('leaveRank').value = selectedSoldier.rank || '';
+                        document.getElementById('leaveUnit').value = selectedSoldier.unit || '';
+                    }
+                } else {
+                    // Clear fields if no matching soldier is found
+                    if (formType === 'absence') {
+                        document.getElementById('rank').value = '';
+                        document.getElementById('unit').value = '';
+                    } else {
+                        document.getElementById('leaveRank').value = '';
+                        document.getElementById('leaveUnit').value = '';
+                    }
+                }
+            } catch (error) {
+                console.error('Error filling soldier data:', error);
+            }
+        }
+        
+        // Function to update total soldiers counter with visual feedback
+        function updateTotalSoldiersCounter() {
+            try {
+                const soldiers = JSON.parse(localStorage.getItem('soldiers')) || [];
+                const counterElement = document.getElementById('totalSoldiersCounter');
+                if (counterElement) {
+                    // Remove any existing animation class
+                    counterElement.classList.remove('updated');
+                    
+                    // Force reflow to reset animation
+                    void counterElement.offsetWidth;
+                    
+                    // Update the counter value
+                    counterElement.textContent = soldiers.length.toLocaleString('ar-EG');
+                    
+                    // Add animation class
+                    counterElement.classList.add('updated');
+                    
+                    // Remove the animation class after it completes
+                    setTimeout(() => {
+                        counterElement.classList.remove('updated');
+                    }, 500);
+                }
+            } catch (error) {
+                console.error('Error updating soldiers counter:', error);
+            }
+        }
+        
+        // Function to show message to user
+        function showMessage(message, type = 'error') {
+            const elementId = type === 'error' ? 'errorMessage' : 'backupMessage';
+            const messageElement = document.getElementById(elementId);
+            messageElement.textContent = message;
+            messageElement.style.color = type === 'error' ? '#e74c3c' : '#27ae60';
+            
+            // Hide message after 5 seconds
+            setTimeout(() => {
+                messageElement.textContent = '';
+            }, 5000);
+        }
+        
+        // Function to show profile section
+        function checkProfilePassword() {
+            try {
+                const profileOverlay = document.getElementById('profileOverlay');
+                if (profileOverlay) {
+                    profileOverlay.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                    // Set default tab to profile
+                    showProfileTab('profile');
+                }
+            } catch (error) {
+                console.error('Error showing profile section:', error);
+            }
+        }
+
+        // Function to hide profile section
+        function hideProfileSection() {
+            try {
+                const profileOverlay = document.getElementById('profileOverlay');
+                if (profileOverlay) {
+                    profileOverlay.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            } catch (error) {
+                console.error('Error hiding profile section:', error);
+            }
+        }
+
+        // Function to switch between profile tabs
+        function showProfileTab(tabName) {
+            try {
+                // Hide all tab contents
+                const tabContents = document.querySelectorAll('.profile-content');
+                tabContents.forEach(tab => tab.classList.remove('active'));
+                
+                // Deactivate all tabs
+                const tabs = document.querySelectorAll('.profile-tab');
+                tabs.forEach(tab => tab.classList.remove('active'));
+                
+                // Show selected tab content
+                const activeTabContent = document.getElementById(tabName + 'Tab');
+                if (activeTabContent) {
+                    activeTabContent.classList.add('active');
+                }
+                
+                // Activate clicked tab
+                const activeTab = Array.from(tabs).find(tab => 
+                    tab.getAttribute('onclick')?.includes(`'${tabName}'`)
+                );
+                if (activeTab) {
+                    activeTab.classList.add('active');
+                }
+            } catch (error) {
+                console.error('Error switching profile tab:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load saved records and soldiers
+            loadRecordsFromStorage();
+            loadSoldiersForSearch();
+
+            const userRole = sessionStorage.getItem('userRole');
+
+            if (userRole === 'user') {
+                 // Hide action buttons in the table after loading
+                const actionButtons = document.querySelectorAll('.action-btn');
+                actionButtons.forEach(button => {
+                    button.style.display = 'none';
+                });
+                 // Hide action header in the table
+                const actionHeader = document.querySelector('#mainTable th:last-child');
+                if(actionHeader) {
+                    actionHeader.style.display = 'none';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+        
+        // Close modal when clicking outside
+        document.addEventListener('click', function(event) {
+    </script>
+
+    <!-- Password Prompt Modal -->
+    <div id="passwordPrompt" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 style="margin: 0; color: var(--text-color);">تکایە وشەی نهێنی بنووسە</h3>
+                <span onclick="hidePasswordPrompt()" style="cursor: pointer; font-size: 24px; color: var(--text-color);">&times;</span>
+            </div>
+            <div class="form-group">
+                <input type="password" id="profilePassword" placeholder="وشەی نهێنی" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: 5px; background-color: var(--card-bg); color: var(--text-color);" />
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                <button onclick="hidePasswordPrompt()" class="btn" style="background: var(--secondary);">پاشگەزبوونەوە</button>
+                <button onclick="verifyProfilePassword()" class="btn" style="background: var(--primary);">داخل بوون</button>
+            </div>
+            <p id="passwordError" style="color: #e74c3c; margin-top: 10px; display: none;">وشەی نهێنی هەڵەیە، تکایە دووبارە هەوڵبدەرەوە</p>
+        </div>
+    </div>
+
+    <style>
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            animation: modalFadeIn 0.3s;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 400px;
+            margin: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+    </style>
+
+    <script>
+        // Password prompt functions
+        function showProfilePasswordPrompt(event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
+            console.log('Showing password prompt...');
+            const modal = document.getElementById('passwordPrompt');
+            if (!modal) {
+                console.error('Password modal not found');
+                return;
+            }
+            
+            modal.style.display = 'flex';
+            const passwordInput = document.getElementById('profilePassword');
+            const errorElement = document.getElementById('passwordError');
+            
+            if (passwordInput) {
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+            
+            if (errorElement) {
+                errorElement.style.display = 'none';
+            }
+        }
+
+        function hidePasswordPrompt() {
+            var modal = document.getElementById('passwordPrompt');
+            if (modal) {
+                modal.style.display = 'none';
+                var passwordInput = document.getElementById('profilePassword');
+                if (passwordInput) passwordInput.value = '';
+                var errorElement = document.getElementById('passwordError');
+                if (errorElement) errorElement.style.display = 'none';
+            }
+        }
+
+        function verifyProfilePassword() {
+            console.log('Verifying password...');
+            const passwordInput = document.getElementById('profilePassword');
+            if (!passwordInput) {
+                console.error('Password input not found');
+                return false;
+            }
+            
+            const password = passwordInput.value.trim();
+            const savedPassword = localStorage.getItem('adminPassword') || '1234';
+            
+            console.log('Entered password:', password);
+            console.log('Saved password:', savedPassword);
+            
+            if (password === savedPassword) {
+                console.log('Password correct, redirecting...');
+                window.location.href = 'profile.html';
+                return true;
+            } else {
+                console.log('Password incorrect');
+                const errorElement = document.getElementById('passwordError');
+                if (errorElement) {
+                    errorElement.style.display = 'block';
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                    
+                    // Add shake animation
+                    errorElement.style.animation = 'shake 0.5s';
+                    setTimeout(() => {
+                        errorElement.style.animation = '';
+                    }, 500);
+                }
+                return false;
+            }
+        }
+
+        // Function to reset password to default
+        function resetPassword() {
+            const defaultPass = '1234';
+            localStorage.setItem('adminPassword', defaultPass);
+            console.log('Password has been reset to default:', defaultPass);
+            alert('Password has been reset to: ' + defaultPass);
+            return defaultPass;
+        }
+
+        // Set default password if not exists
+        if (!localStorage.getItem('adminPassword')) {
+            resetPassword();
+        }
+
+        // Initialize event listeners when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Current password in localStorage:', localStorage.getItem('adminPassword'));
+            
+            // Handle Enter key in password field
+            var passwordInput = document.getElementById('profilePassword');
+            if (passwordInput) {
+                passwordInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        verifyProfilePassword();
+                    }
+                });
+            }
+
+            // Close modal when clicking outside
+            document.addEventListener('click', function(event) {
+                var modal = document.getElementById('passwordPrompt');
+                if (event.target === modal) {
+                    hidePasswordPrompt();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

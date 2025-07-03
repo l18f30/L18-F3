@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پرۆفایلم - سیستەمی غیاب و مۆڵەت</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #e74c3c;
+            --accent: #f39c12;
+            --light: #ecf0f1;
+            --dark: #1a252f;
+            --bg-color: #ffffff;
+            --text-color: #1a252f;
+            --card-bg: #f8f9fa;
+            --border-color: #dee2e6;
+        }
+        
+        [data-theme="dark"] {
+            --primary: #4da6ff;
+            --light: #2c3e50;
+            --dark: #f8f9fa;
+            --bg-color: #1a252f;
+            --text-color: #f0f4f8;
+            --card-bg: #2c3e50;
+            --border-color: #3e5469;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .header h1 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin: 0;
+        }
+        
+        .back-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .profile-container {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .profile-pic-container {
+            position: relative;
+            margin-left: 20px;
+        }
+        
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+        }
+        
+        .profile-upload {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: var(--primary);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .profile-upload input[type="file"] {
+            display: none;
+        }
+        
+        .profile-info {
+            flex: 1;
+        }
+        
+        .profile-name {
+            margin: 0;
+            color: var(--text-color);
+            font-size: 1.5rem;
+        }
+        
+        .profile-role {
+            margin: 5px 0 0;
+            color: var(--secondary);
+            font-size: 1rem;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .tab.active {
+            border-bottom-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .tab i {
+            margin-left: 8px;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 20px 0;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input, 
+        .form-group select {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+        
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary);
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        .backup-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .backup-card {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .backup-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .backup-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .backup-card h4 {
+            margin: 10px 0;
+            color: var(--text-color);
+        }
+        
+        .backup-card p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            /* General Styles */
+            body {
+                padding: 0;
+                font-size: 14px;
+            }
+            
+            .profile-container {
+                margin: 0;
+                padding: 1rem;
+                border-radius: 0;
+                min-height: 100vh;
+            }
+            
+            /* Header */
+            .header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 1000;
+                background: var(--bg-color);
+                padding: 0.8rem 1rem;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            
+            .header h1 {
+                font-size: 1.2rem;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            
+            .back-btn {
+                font-size: 1rem;
+                padding: 0.5rem;
+            }
+            
+            /* Profile Header */
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 1rem 0;
+                margin-top: 3rem;
+            }
+            
+            .profile-pic-container {
+                margin: 0 auto 1rem;
+            }
+            
+            .profile-pic {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .profile-upload {
+                right: 5px;
+                bottom: 5px;
+                width: 32px;
+                height: 32px;
+                line-height: 32px;
+            }
+            
+            /* Tabs */
+            .tabs {
+                flex-direction: row;
+                overflow-x: auto;
+                padding: 0.5rem 0;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                margin: 0 -1rem;
+                padding: 0.5rem 1rem;
+            }
+            
+            .tabs::-webkit-scrollbar {
+                display: none;
+            }
+            
+            .tab {
+                white-space: nowrap;
+                padding: 0.5rem 1rem;
+                margin: 0 0.2rem;
+                font-size: 0.9rem;
+            }
+            
+            /* Form Elements */
+            .form-group {
+                margin-bottom: 1rem;
+            }
+            
+            input, select, textarea {
+                width: 100%;
+                padding: 0.8rem;
+                font-size: 16px; /* Prevents zoom on focus in iOS */
+            }
+            
+            /* Buttons */
+            .btn {
+                padding: 0.8rem;
+                font-size: 1rem;
+                margin: 0.5rem 0;
+            }
+            
+            .btn-block {
+                width: 100%;
+            }
+            
+            /* Tab Content */
+            .tab-content {
+                padding: 1rem 0;
+            }
+            
+            /* Settings Section */
+            .settings-section {
+                margin-bottom: 1.5rem;
+            }
+            
+            .settings-section h3 {
+                font-size: 1.1rem;
+                margin-bottom: 1rem;
+                padding-bottom: 0.5rem;
+                border-bottom: 1px solid var(--border-color);
+            }
+            
+            /* Hide some elements on mobile */
+            .print-only {
+                display: none;
+            }
+        }
+        
+        /* Small mobile devices */
+        @media (max-width: 480px) {
+            .profile-pic {
+                width: 90px;
+                height: 90px;
+            }
+            
+            .tab {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.85rem;
+            }
+            
+            .btn {
+                padding: 0.7rem;
+                font-size: 0.95rem;
+            }
+        }
+        
+        /* Original Styles */
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-pic-container {
+                margin: 0 0 15px 0;
+            }
+            
+            .tabs {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .tab {
+                white-space: nowrap;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <button class="back-btn" onclick="window.history.back()">
+            <i class="fas fa-arrow-right"></i> گەڕانەوە
+        </button>
+        <h1>پرۆفایلم</h1>
+        <div></div> <!-- Empty div for flex spacing -->
+    </div>
+    
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-pic-container">
+                <img id="profileImage" src="profile-placeholder.png" alt="Profile Picture" class="profile-pic">
+                <label class="profile-upload" for="profileUpload" title="گۆڕینی وێنە">
+                    <i class="fas fa-camera"></i>
+                    <input type="file" id="profileUpload" accept="image/*">
+                </label>
+            </div>
+            <div class="profile-info">
+                <h2 class="profile-name" id="profileName">ناوی بەکارهێنەر</h2>
+                <p class="profile-role">بەڕێوەبەری سیستەم</p>
+            </div>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('profile')">
+                <i class="fas fa-user"></i> پرۆفایل
+            </div>
+            <div class="tab" onclick="showTab('password')">
+                <i class="fas fa-key"></i> گۆڕینی وشەی نهێنی
+            </div>
+            <div class="tab" onclick="showTab('backup')">
+                <i class="fas fa-database"></i> پشتیوانی
+            </div>
+        </div>
+        
+        <!-- Profile Tab -->
+        <div id="profileTab" class="tab-content active">
+            <h3>زانیارییەکانی پرۆفایل</h3>
+            <form id="profileForm">
+                <div class="form-group">
+                    <label for="fullName">ناوی تەواو</label>
+                    <input type="text" id="fullName" value="ناوی تەواو" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">ئیمەیڵ</label>
+                    <input type="email" id="email" value="example@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">ژمارەی مۆبایل</label>
+                    <input type="tel" id="phone" value="0750 123 4567">
+                </div>
+                <button type="submit" class="btn btn-block">پاشەکەوت کردنی گۆڕانکارییەکان</button>
+            </form>
+        </div>
+        
+        <!-- Password Tab -->
+        <div id="passwordTab" class="tab-content">
+            <h3>گۆڕینی وشەی نهێنی</h3>
+            <form id="passwordForm">
+                <div class="form-group">
+                    <label for="currentPassword">وشەی نهێنی ئێستا</label>
+                    <input type="password" id="currentPassword" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="newPassword">وشەی نهێنی نوێ</label>
+                        <input type="password" id="newPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">دووبارەکردنەوەی وشەی نهێنی نوێ</label>
+                        <input type="password" id="confirmPassword" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-block">گۆڕینی وشەی نهێنی</button>
+            </form>
+        </div>
+        
+        <!-- Backup Tab -->
+        <div id="backupTab" class="tab-content">
+            <h3>پشتیوانی و گەڕاندنەوەی زانیارییەکان</h3>
+            <p>لێرە دەتوانیت زانیارییەکانی سیستەم هەڵبگریت یان گەڕانەوەی لێبکەیتەوە.</p>
+            
+            <div class="backup-options">
+                <div class="backup-card" onclick="exportData()">
+                    <div class="backup-icon">
+                        <i class="fas fa-file-export"></i>
+                    </div>
+                    <h4>هەڵگرتنی زانیارییەکان</h4>
+                    <p>هەموو زانیارییەکان وەک فایلێکی JSON هەڵبگرە</p>
+                </div>
+                
+                <div class="backup-card" onclick="document.getElementById('restoreFile').click()">
+                    <div class="backup-icon">
+                        <i class="fas fa-file-import"></i>
+                    </div>
+                    <h4>گەڕاندنەوەی زانیارییەکان</h4>
+                    <p>زانیارییە پێشووەکان لە فایلێکەوە بخەرە ناو سیستەمەوە</p>
+                    <input type="file" id="restoreFile" accept=".json" style="display: none;" onchange="importData(event)">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Deactivate all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            
+            // Activate clicked tab
+            const activeTab = Array.from(document.querySelectorAll('.tab')).find(tab => 
+                tab.getAttribute('onclick')?.includes(`'${tabName}'`)
+            );
+            if (activeTab) {
+                activeTab.classList.add('active');
+            }
+        }
+        
+        // Handle profile image upload
+        document.getElementById('profileUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    document.getElementById('profileImage').src = event.target.result;
+                    // Here you would typically save the image to your backend
+                    localStorage.setItem('profileImage', event.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Load saved profile image if exists
+        window.addEventListener('load', function() {
+            const savedImage = localStorage.getItem('profileImage');
+            if (savedImage) {
+                document.getElementById('profileImage').src = savedImage;
+            }
+            
+            // Load saved profile data
+            const savedProfile = JSON.parse(localStorage.getItem('profileData') || '{}');
+            if (savedProfile.fullName) {
+                document.getElementById('fullName').value = savedProfile.fullName;
+                document.getElementById('profileName').textContent = savedProfile.fullName;
+            }
+            if (savedProfile.email) document.getElementById('email').value = savedProfile.email;
+            if (savedProfile.phone) document.getElementById('phone').value = savedProfile.phone;
+        });
+        
+        // Save profile data
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const profileData = {
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value
+            };
+            
+            // Save to localStorage (in a real app, you'd save to a backend)
+            localStorage.setItem('profileData', JSON.stringify(profileData));
+            document.getElementById('profileName').textContent = profileData.fullName;
+            
+            // Show success message
+            alert('زانیارییەکان بە سەرکەوتوویی پاشەکەوتکران');
+        });
+        
+        // Change password
+        document.getElementById('passwordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (newPassword !== confirmPassword) {
+                alert('وشەی نهێنی نوێ و دووبارەکردنەوەی جیاوازن لە یەک');
+                return;
+            }
+            
+            // Here you would typically validate the current password and update it on the backend
+            // For demo, we'll just show a success message
+            alert('وشەی نهێنی بە سەرکەوتوویی گۆڕدرا');
+            this.reset();
+        });
+        
+        // Export data
+        function exportData() {
+            // Get all data from localStorage
+            const data = {
+                profile: JSON.parse(localStorage.getItem('profileData') || '{}'),
+                // Add other data you want to export
+                exportDate: new Date().toISOString()
+            };
+            
+            // Create a download link
+            const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data, null, 2));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute('href', dataStr);
+            downloadAnchorNode.setAttribute('download', `system_backup_${new Date().toISOString().split('T')[0]}.json`);
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+            
+            alert('زانیارییەکان بە سەرکەوتوویی هەڵگیران');
+        }
+        
+        // Import data
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    
+                    if (confirm('ئایا دڵنیایت دەتەوێت زانیارییەکان بگۆڕیت؟ ئەم کارە ناتوانرێت هەڵبگیرێتەوە.')) {
+                        if (data.profile) {
+                            localStorage.setItem('profileData', JSON.stringify(data.profile));
+                            // Reload to apply changes
+                            window.location.reload();
+                        }
+                        alert('زانیارییەکان بە سەرکەوتوویی گەڕانەوە');
+                    }
+                } catch (error) {
+                    console.error('Error importing data:', error);
+                    alert('هەڵەیەک ڕوویدا لەکاتی خوێندنەوەی فایلەکە');
+                }
+            };
+            reader.readAsText(file);
+            
+            // Reset file input
+            event.target.value = '';
+        }
+    </script>
+</body>
+</html>
